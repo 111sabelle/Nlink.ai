@@ -10,14 +10,9 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@react-three/drei": "^9.88.0",
-    "@react-three/fiber": "^8.15.0",
-    "@react-three/postprocessing": "^3.0.4",
-    "@react-three/rapier": "^1.1.0",
-    "@use-gesture/react": "^10.3.1",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "gsap": "^3.12.2",
-    "leva": "^0.10.0",
-    "postprocessing": "^6.37.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "three": "^0.168.0"
@@ -31,15 +26,6 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "ignorePatterns": [
-      "src/components/singularity/models/**",
-      "src/components/singularity/utils/**",
-      "src/components/singularity/ContainerModel.jsx",
-      "src/components/singularity/DraggableRigidBody.jsx",
-      "src/components/singularity/CustomDragControls.jsx",
-      "src/components/singularity/SmoothOrbitControls.jsx",
-      "src/components/singularity/LoadingScreen.jsx"
     ]
   },
   "overrides": {
