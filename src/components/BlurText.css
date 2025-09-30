@@ -1,0 +1,10 @@
+.blur-text-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.blur-text-span {
+  display: inline-block;
+  will-change: transform, filter, opacity;
+}

@@ -1,0 +1,95 @@
+.scroll-reveal {
+  margin: 20px 0;
+}
+
+.scroll-reveal-text {
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.word {
+  display: inline-block;
+}
+
+/* SplineSection特定样式 */
+.spline-title {
+  margin: 0 0 2rem 0;
+}
+
+.spline-title-text {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: #000000;
+  letter-spacing: -0.02em;
+}
+
+.spline-description {
+  margin: 0;
+}
+
+.spline-description-text {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #333333;
+  max-width: 500px;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .spline-title-text {
+    font-size: 3.2rem;
+    font-weight: 500;
+  }
+  
+  .spline-description-text {
+    font-size: 1.0rem;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 968px) {
+  .spline-title-text {
+    font-size: 2.6rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  
+  .spline-description-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .spline-title-text {
+    font-size: 2.2rem;
+    font-weight: 500;
+  }
+  
+  .spline-description-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spline-title-text {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .spline-description-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+    max-width: 300px;
+  }
+}

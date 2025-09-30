@@ -1,0 +1,260 @@
+.cta-section {
+  width: 100%;
+  padding: 12rem 4rem; /* 大幅增加顶部padding，提供更大的上方空间 */
+  background: #f5f5f5; /* 与SocialShowcase背景一致 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.cta-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.cta-content {
+  background: #ffffff; /* 白色圆角矩形背景 */
+  border-radius: 24px;
+  border: none; /* 移除黑色描边，使用electric边框 */
+  padding: 0; /* 移除padding，使用绝对定位 */
+  min-height: 300px; /* 固定较矮的高度 */
+  max-height: 300px; /* 固定最大高度，不受图像影响 */
+  position: relative; /* 为绝对定位元素做准备 */
+  z-index: 0; /* 设为0，让边框（z-index: -1）在背景下方 */
+}
+
+.cta-text-area {
+  position: absolute;
+  top: 2rem; /* 位于卡片左上角 */
+  left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem; /* 进一步缩小两行字之间的距离 */
+  max-width: 350px; /* 限制最大宽度，避免与图像重叠 */
+  z-index: 20; /* 确保文字在边框上方 */
+}
+
+.cta-title {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* 减小字体 */
+  font-weight: 300; /* 较细的字重 */
+  line-height: 1.2;
+  color: #666666; /* 较浅的颜色 */
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.cta-subtitle {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem); /* 减小字体 */
+  font-weight: 800; /* 保持很粗的字重 */
+  line-height: 1.1;
+  color: #000000; /* 纯黑色 */
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.cta-button {
+  position: absolute;
+  top: 65%; /* 向下移动，不再垂直居中 */
+  left: 2rem; /* 左侧对齐 */
+  right: 70%; /* 进一步缩短按钮长度 */
+  transform: translateY(-50%); /* 保持变换基准 */
+  background: linear-gradient(90deg, #FFDEF9 0%, #C3F4DE 100%); /* 从左至右渐变 */
+  border: none;
+  border-radius: 50px; /* 拉到最圆 */
+  padding: 1rem 1rem 1rem 2.5rem; /* 右侧padding减小为圆形图标留空间 */
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.3rem; /* 增大文字 */
+  font-weight: 600;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none; /* 移除大写转换，保持原始大小写 */
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 文字和图标分别在两端 */
+  z-index: 20; /* 确保按钮在边框上方 */
+}
+
+.cta-button-text {
+  flex: 1; /* 文字占据剩余空间 */
+  text-align: left; /* 文字左对齐 */
+}
+
+.cta-button-icon {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 50%; /* 圆形 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem; /* 与文字的间距 */
+}
+
+.plus-icon {
+  font-size: 24px;
+  font-weight: 300;
+  color: #000000;
+  line-height: 1;
+}
+
+
+.cta-button:hover {
+  transform: translateY(calc(-50% - 2px)); /* 保持垂直居中并向上移动 */
+}
+
+.cta-button:active {
+  transform: translateY(-50%); /* 保持垂直居中 */
+}
+
+.cta-image-area {
+  position: absolute;
+  right: -12rem; /* 更大幅度超出卡片右边缘 */
+  top: -14rem; /* 大幅向上超出卡片顶部 */
+  bottom: -8rem; /* 大幅向下超出 */
+  width: 80%; /* 大幅增加占据面积 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100; /* 图像在wrapper内的最高层级，独立于ElectricBorder */
+  pointer-events: none; /* 不阻挡点击事件 */
+}
+
+.cta-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 保持图像原始比例和形状 */
+  /* 保持不规则图像的原始形状 */
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .cta-section {
+    padding: 10rem 2rem; /* 大幅增加顶部padding */
+  }
+  
+  .cta-text-area {
+    top: 1.5rem; /* 响应式调整位置 */
+    left: 1.5rem;
+  }
+  
+  .cta-button {
+    top: 65%; /* 保持向下位置 */
+    left: 1.5rem; /* 响应式调整按钮位置 */
+    right: 75%; /* 响应式进一步缩短按钮 */
+  }
+  
+  .cta-title {
+    font-size: 1.4rem; /* 减小字体 */
+    font-weight: 300;
+  }
+  
+  .cta-subtitle {
+    font-size: 2.1rem; /* 减小字体 */
+    font-weight: 800;
+  }
+}
+
+@media (max-width: 968px) {
+  .cta-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 2rem;
+    max-height: none; /* 移动端移除高度限制 */
+  }
+  
+  .cta-text-area {
+    width: 100%; /* 移动端文字区域全宽 */
+    max-width: none;
+    order: 2; /* 移动端文字在下方 */
+  }
+  
+  .cta-image-area {
+    position: relative; /* 移动端回到相对定位 */
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    height: 250px; /* 移动端固定高度 */
+    order: 1; /* 移动端图片在上方 */
+  }
+  
+  .cta-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .cta-button {
+    position: relative; /* 移动端改回相对定位 */
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    align-self: center; /* 移动端按钮居中 */
+    width: auto; /* 移动端宽度自适应 */
+  }
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 8rem 1rem; /* 大幅增加顶部padding */
+  }
+  
+  .cta-content {
+    padding: 1.5rem;
+    min-height: auto;
+    border-width: 1.5px; /* 稍细的描边 */
+  }
+  
+  .cta-image-area {
+    height: 200px; /* 小屏幕调整图像高度 */
+  }
+  
+  .cta-title {
+    font-size: 1.1rem; /* 第一行小字 */
+    font-weight: 300;
+  }
+  
+  .cta-subtitle {
+    font-size: 1.5rem; /* 第二行减小 */
+    font-weight: 800;
+  }
+  
+  .cta-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-image-area {
+    height: 180px; /* 最小屏幕进一步调整图像高度 */
+  }
+  
+  .cta-title {
+    font-size: 0.9rem; /* 第一行最小字体 */
+    font-weight: 300;
+  }
+  
+  .cta-subtitle {
+    font-size: 1.2rem; /* 第二行最小屏幕尺寸 */
+    font-weight: 800;
+  }
+  
+  .cta-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

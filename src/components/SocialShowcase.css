@@ -1,0 +1,113 @@
+.social-section {
+  width: 100%;
+  padding: 12rem 4rem 6rem 4rem; /* 增加顶部padding，确保不覆盖导航栏 */
+  background: #f5f5f5; /* 恢复背景色 */
+  position: relative;
+  z-index: 11; /* 适中的z-index：高于SplineSection（10），远低于导航栏（99999） */
+  margin-top: -100vh; /* 负边距让它能够覆盖在SplineSection上 */
+  min-height: 100vh; /* 确保有足够高度 */
+}
+
+.social-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+  max-width: 1400px;
+  margin: 0 auto 0.3rem auto; /* 恢复原始margin设置 */
+}
+
+.social-subtitle { /* 让右侧文案的右边缘与圆角矩形对齐 */
+  justify-self: end;
+}
+
+.social-title-main {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 5vw, 3.2rem); /* 整体更小 */
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: #000;
+  margin: 0;
+}
+
+.social-subtitle p {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem); /* 再小一号 */
+  line-height: 1.18; /* 行距更紧凑 */
+  color: #000; /* 设为纯黑 */
+  margin: 0;
+  max-width: 28ch; /* 控制段落宽度，左右更短 */
+}
+
+.social-showcase {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 大圆角矩形容器 */
+.media-frame {
+  width: 100%;
+  border-radius: 28px;
+  background: transparent; /* 与页面背景一致 */
+  border: 2px solid #000000; /* 添加黑色边框 */
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  overflow: hidden; /* 统一裁切 */
+}
+
+/* 内部一行 5 列布局，间距用gap实现 */
+.media-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.8rem; /* 增加列间距，避免重叠感 */
+  padding: 0; /* 移除内边距，让图像直接贴到圆角矩形边缘 */
+  align-items: center; /* 让每个cell居中，图片以高度中点对齐 */
+  /* 将整行略微放大并左右超出，让左右两张被大圆角裁切一部分 */
+  width: 112%;
+  transform: translateX(-6%);
+}
+
+/* 单个cell承载一张竖图 */
+.media-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: min(66vh, 860px); /* 稍矮一点 */
+  overflow: hidden; /* 防止单张图片在列内横向溢出 */
+}
+
+.media-img {
+  width: 100%; /* 单张在列内不放大，避免相互覆盖 */
+  height: auto;
+  object-fit: cover;
+  will-change: transform;
+  transform: translateY(var(--ty, 0px));
+  transition: transform 0.15s ease-out;
+}
+
+@media (max-width: 1200px) {
+  .social-section { 
+    padding: 10rem 2rem 4rem 2rem; /* 增加顶部padding，确保不覆盖导航栏 */
+    margin-top: -80vh; /* 保持覆盖效果 */
+  }
+  .social-showcase { gap: 1rem; }
+}
+
+@media (max-width: 968px) {
+  .social-section { 
+    padding: 9rem 2rem 4rem 2rem; /* 移动端增加顶部padding */
+    margin-top: -70vh; /* 移动端保持覆盖效果 */
+  }
+  .social-header { 
+    grid-template-columns: 1fr; 
+    gap: 1rem; 
+  }
+  .media-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .media-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+

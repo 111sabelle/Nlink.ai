@@ -1,0 +1,61 @@
+{
+  "name": "nlink-brand-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.88.0",
+    "@react-three/fiber": "^8.15.0",
+    "@react-three/postprocessing": "^3.0.4",
+    "@react-three/rapier": "^1.1.0",
+    "@use-gesture/react": "^10.3.1",
+    "gsap": "^3.12.2",
+    "leva": "^0.10.0",
+    "postprocessing": "^6.37.8",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "three": "^0.168.0"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
+    "react-scripts": "5.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "ignorePatterns": [
+      "src/components/singularity/models/**",
+      "src/components/singularity/utils/**",
+      "src/components/singularity/ContainerModel.jsx",
+      "src/components/singularity/DraggableRigidBody.jsx",
+      "src/components/singularity/CustomDragControls.jsx",
+      "src/components/singularity/SmoothOrbitControls.jsx",
+      "src/components/singularity/LoadingScreen.jsx"
+    ]
+  },
+  "overrides": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

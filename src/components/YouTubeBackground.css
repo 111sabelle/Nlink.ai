@@ -1,0 +1,77 @@
+.youtube-background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.youtube-video-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.youtube-player {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* 确保视频在不同屏幕比例下都能填满 */
+@media (min-aspect-ratio: 16/9) {
+  .youtube-player {
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio */
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .youtube-player {
+    width: 177.78vh; /* 16:9 aspect ratio */
+    height: 100vh;
+  }
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.youtube-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 确保YouTube iframe完全隐藏控件 */
+.youtube-background iframe {
+  pointer-events: none;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .youtube-background {
+    height: 100vh;
+  }
+  
+  .video-overlay {
+    background: rgba(0, 0, 0, 0.4);
+  }
+}

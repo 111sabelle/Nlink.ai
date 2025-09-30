@@ -1,0 +1,1252 @@
+/* 自定义字体 - Helvetica Neue */
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('./assets/fonts/HelveticaNeue-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('./assets/fonts/HelveticaNeue-Roman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('./assets/fonts/HelveticaNeue-Roman.otf') format('opentype');
+  font-weight: 500; /* Medium weight */
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overflow-y: auto; /* 允许垂直滚动 */
+  background-color: #F0F0F0; /* 添加背景颜色 */
+}
+
+/* 页面布局 */
+.App {
+  width: 100%;
+  min-height: calc(100vh + 5rem); /* 页面高度 = 视频高度 + 按钮区域高度 */
+  position: relative;
+  overflow: visible;
+  background-color: #F0F0F0; /* 确保App容器也有背景色 */
+}
+
+/* 视频容器 */
+.video-container {
+  width: 100%;
+  height: calc(100vh - 2rem); /* 从100vh缩短2rem */
+  overflow: hidden;
+  position: relative; /* 添加相对定位 */
+}
+
+.YouTubeBackground {
+  height: 100%; /* 填满video-container的高度 */
+  overflow: hidden;
+  position: relative;
+}
+
+/* 视频边缘渐变遮罩 */
+.video-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    #F0F0F0 0%,
+    rgba(240, 240, 240, 0.6) 2%,
+    rgba(240, 240, 240, 0.3) 4%,
+    rgba(240, 240, 240, 0.1) 6%,
+    rgba(240, 240, 240, 0) 8%,
+    rgba(240, 240, 240, 0) 92%,
+    rgba(240, 240, 240, 0.1) 94%,
+    rgba(240, 240, 240, 0.3) 96%,
+    rgba(240, 240, 240, 0.6) 98%,
+    #F0F0F0 100%
+  );
+  z-index: 5; /* 降低层级，位于pill nav和半透明矩形之下 */
+  pointer-events: none;
+}
+
+/* 确保视频内容在渐变下方 */
+.YouTubeBackground {
+  z-index: 1;
+}
+
+/* 确保pill nav在渐变上方 - 这个设置被下面的导航栏容器覆盖 */
+
+/* 确保半透明矩形在渐变上方 */
+.left-vertical-image,
+.bottom-image {
+  z-index: 25; /* 半透明矩形在渐变之上，但在pill nav之下 */
+}
+
+/* 手机模式元素 */
+.phone-left-accent,
+.phone-frame {
+  z-index: 20;
+}
+
+.draggable-text {
+  z-index: 15; /* 可拖动文字在渐变和其他元素之间 */
+}
+
+/* 控制区域 - 位于视频下方，跟随页面滚动 */
+.control-area {
+  position: relative;
+  width: 100%;
+  height: 5rem;
+  background: #F0F0F0; /* 从transparent改为背景色，保持一致 */
+  display: flex;
+  align-items: flex-start; /* 从center改为flex-start，让按钮靠上对齐 */
+  justify-content: center;
+  z-index: 1000;
+  padding-top: 1rem; /* 添加顶部padding，按钮上移 */
+}
+
+/* 蒙版切换按钮 - 只保留这一个定义 */
+.mask-toggle {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.mask-toggle-btn {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+  background: #cccccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  min-width: 8px;
+}
+
+.mask-toggle-btn.active {
+  background: #666666;
+}
+
+.mask-toggle-btn .mask-dot {
+  display: none;
+}
+
+/* 确保body正确 */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto; /* 允许垂直滚动 */
+  background-color: #F0F0F0; /* 添加背景颜色 */
+}
+
+/* 页面布局 */
+.App {
+  width: 100%;
+  min-height: calc(100vh + 5rem); /* 页面高度 = 视频高度 + 按钮区域高度 */
+  position: relative;
+  overflow: visible;
+  background-color: #F0F0F0; /* 确保App容器也有背景色 */
+}
+
+/* 视频容器 */
+.video-container {
+  width: 100%;
+  height: calc(100vh - 2rem); /* 从100vh缩短2rem */
+  overflow: hidden;
+}
+
+.YouTubeBackground {
+  height: 100%; /* 填满video-container的高度 */
+  overflow: hidden;
+  position: relative;
+}
+
+/* 控制区域 - 位于视频下方，跟随页面滚动 */
+.control-area {
+  position: relative;
+  width: 100%;
+  height: 5rem;
+  background: #F0F0F0; /* 从transparent改为背景色，保持一致 */
+  display: flex;
+  align-items: flex-start; /* 从center改为flex-start，让按钮靠上对齐 */
+  justify-content: center;
+  z-index: 1000;
+  padding-top: 1rem; /* 添加顶部padding，按钮上移 */
+}
+
+/* 蒙版切换按钮 - 只保留这一个定义 */
+.mask-toggle {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.mask-toggle-btn {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+  background: #cccccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  min-width: 8px;
+}
+
+.mask-toggle-btn.active {
+  background: #666666;
+}
+
+.mask-toggle-btn .mask-dot {
+  display: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .App {
+    min-height: calc(100vh + 4rem);
+  }
+
+  .video-container {
+    height: calc(100vh - 1.5rem); /* 平板端缩短1.5rem */
+  }
+
+  .control-area {
+    height: 4rem;
+    padding-top: 0.8rem; /* 平板端稍微调整 */
+  }
+
+  .mask-toggle-btn {
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    min-height: calc(100vh + 3rem);
+  }
+
+  .video-container {
+    height: calc(100vh - 1rem); /* 移动端缩短1rem */
+  }
+
+  .control-area {
+    height: 3rem;
+    padding-top: 0.6rem; /* 移动端稍微调整 */
+  }
+
+  .mask-toggle-btn {
+    width: 5px;
+    height: 5px;
+    min-width: 5px;
+  }
+}
+
+/* 导航栏容器 */
+.navigation-wrapper {
+  position: fixed; /* 从 absolute 改为 fixed */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999; /* 极高z-index确保始终在最顶层 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  width: 100%;
+  box-sizing: border-box; /* 确保padding不影响宽度 */
+}
+
+/* 左侧导航 */
+.left-nav .pill-nav-container {
+  position: static;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.left-nav .pill-nav {
+  gap: 0;
+  display: flex;
+  align-items: center;
+}
+
+.left-nav .pill-logo {
+  margin-right: 1rem;
+}
+
+/* 中央Logo */
+.center-logo {
+  position: absolute;
+  left: 50%;
+  top: 1rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000; /* 与导航栏保持一致的极高z-index */
+}
+
+.center-logo-container {
+  height: 42px; /* 与左右导航相同高度 */
+  background: #ffffff; /* 直接使用白色背景 */
+  border: 2px solid #000000; /* 使用边框实现黑色轮廓线 */
+  border-radius: 21px; /* 椭圆形 */
+  padding: 8px 16px; /* 直接设置内边距 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影保持一致性 */
+}
+
+/* 删除不再需要的 .center-logo-inner 样式 */
+
+.center-logo-image {
+  height: 16px; /* 从20px进一步减小到16px */
+  width: auto; /* 保持宽高比 */
+  object-fit: contain;
+}
+
+/* 右侧导航容器 */
+.right-nav-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.right-nav .pill-nav-container {
+  position: static;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-nav .pill-nav {
+  gap: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* 隐藏右侧导航的logo */
+.right-nav .pill-logo {
+  display: none;
+}
+
+/* 主要内容区域 - 已清空 */
+.main-content {
+  position: absolute;
+  bottom: 4rem;
+  left: 2rem;
+  z-index: 50;
+  color: white;
+  display: none; /* 隐藏内容区域 */
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .navigation-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .center-logo {
+    position: static;
+    transform: none;
+    order: -1;
+  }
+  
+  .right-nav-wrapper {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .navigation-wrapper {
+    padding: 1rem;
+  }
+  
+  .center-logo-container {
+    height: 36px;
+    border-width: 1.5px; /* 移动端稍细的边框 */
+    padding: 6px 12px;
+  }
+  
+  .center-logo-image {
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .center-logo-container {
+    height: 32px;
+    border-width: 1.5px;
+    padding: 4px 10px;
+  }
+  
+  .center-logo-image {
+    height: 12px;
+  }
+}
+
+.draggable-text {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.1s ease;
+  z-index: 10;
+  max-height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+.draggable-text:hover {
+  transform: scale(1.05);
+}
+
+.draggable-text.dragging {
+  cursor: grabbing;
+  transform: scale(1.1);
+  z-index: 20;
+  transition: none;
+}
+
+.draggable-text:active {
+  cursor: grabbing;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .draggable-text {
+    max-height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .draggable-text {
+    max-height: 50px;
+  }
+}
+
+/* 下方半透明圆角矩形 */
+.bottom-image {
+  position: absolute;
+  bottom: 5rem; /* 保持原来的位置 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+  /* 移除 transition 因为现在由容器控制 */
+}
+
+/* 长圆角矩形半透明背景 */
+.bottom-image::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: -35px; /* 恢复原来的长度 */
+  right: -35px; /* 恢复原来的长度 */
+  top: -10px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px; /* 长圆角矩形，圆角拉到最大 */
+  filter: blur(15px) saturate(1.3) brightness(1.2);
+  z-index: -1;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 玻璃勾线效果 */
+.bottom-image::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: -34px;
+  right: -34px;
+  top: -9px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.01) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  border-radius: 9999px;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(0.3px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bottom-image-content {
+  max-height: 35px; /* 恢复原来的大小 */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  position: relative;
+  z-index: 2;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .bottom-image {
+    bottom: 3.5rem; /* 从2.5rem增加到3.5rem，平板端也向上移动 */
+  }
+  
+  .bottom-image-content {
+    max-height: 28px; /* 从35px缩小到28px */
+  }
+  
+  .bottom-image::before {
+    left: -28px; /* 从-35px调整到-28px */
+    right: -28px; /* 从-35px调整到-28px */
+    top: -8px; /* 从-10px调整到-8px */
+    bottom: -8px; /* 从-10px调整到-8px */
+    background: rgba(255, 255, 255, 0.12); /* 从0.25降低到0.12，更透明 */
+    border-radius: 9999px; /* 保持长圆角矩形 */
+    filter: blur(12px) saturate(1.25) brightness(1.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  .bottom-image::after {
+    left: -27px;
+    right: -27px;
+    top: -7px;
+    bottom: -7px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15) 0%,   /* 降低透明度 */
+      rgba(255, 255, 255, 0.04) 25%,   /* 降低透明度 */
+      rgba(255, 255, 255, 0.005) 50%, /* 降低透明度 */
+      rgba(255, 255, 255, 0.04) 75%,   /* 降低透明度 */
+      rgba(255, 255, 255, 0.15) 100%  /* 降低透明度 */
+    );
+    border-radius: 9999px;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(0.3px);
+    border: 1px solid rgba(255, 255, 255, 0.08); /* 降低边框透明度 */
+  }
+}
+
+@media (max-width: 480px) {
+  .bottom-image {
+    bottom: 3rem; /* 从2rem增加到3rem，移动端也向上移动 */
+  }
+  
+  .bottom-image-content {
+    max-height: 22px; /* 从28px缩小到22px */
+  }
+  
+  .bottom-image::before {
+    left: -20px; /* 从-25px调整到-20px */
+    right: -20px; /* 从-25px调整到-20px */
+    top: -6px; /* 从-7px调整到-6px */
+    bottom: -6px; /* 从-7px调整到-6px */
+    background: rgba(255, 255, 255, 0.1); /* 从0.2降低到0.1，更透明 */
+    border-radius: 9999px; /* 保持长圆角矩形 */
+    filter: blur(10px) saturate(1.2) brightness(1.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  
+  .bottom-image::after {
+    left: -19px;
+    right: -19px;
+    top: -5px;
+    bottom: -5px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12) 0%,   /* 降低透明度 */
+      rgba(255, 255, 255, 0.03) 25%,   /* 降低透明度 */
+      rgba(255, 255, 255, 0.003) 50%, /* 降低透明度 */
+      rgba(255, 255, 255, 0.03) 75%,   /* 降低透明度 */
+      rgba(255, 255, 255, 0.12) 100%  /* 降低透明度 */
+    );
+    border-radius: 9999px;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(0.3px);
+    border: 1px solid rgba(255, 255, 255, 0.06); /* 降低边框透明度 */
+  }
+}
+
+/* 左侧竖形圆角矩形 */
+.left-vertical-image {
+  position: absolute;
+  left: 3rem; /* 从2rem增加到3rem，向右移动 */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.left-vertical-image:hover {
+  opacity: 1;
+}
+
+/* 竖形长圆角矩形半透明背景 */
+.left-vertical-image::before {
+  content: '';
+  position: absolute;
+  bottom: -20px; /* 从-25px缩小到-20px，矩形再缩小 */
+  left: -10px; /* 从-12px缩小到-10px，矩形再缩小 */
+  right: -10px; /* 从-12px缩小到-10px，矩形再缩小 */
+  top: -20px; /* 从-25px缩小到-20px，矩形再缩小 */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  filter: blur(12px) saturate(1.3) brightness(1.2);
+  z-index: -1;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* 竖形玻璃勾线效果 */
+.left-vertical-image::after {
+  content: '';
+  position: absolute;
+  bottom: -18px; /* 相应调整勾线范围 */
+  left: -9px; /* 相应调整勾线范围 */
+  right: -9px; /* 相应调整勾线范围 */
+  top: -18px; /* 相应调整勾线范围 */
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.01) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  border-radius: 9999px;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(0.3px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.left-vertical-image-content {
+  max-height: 150px; /* 保持大尺寸 */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  position: relative;
+  z-index: 2;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .left-vertical-image-content {
+    max-height: 130px; /* 从110px增加到130px，继续增大 */
+  }
+
+  .left-vertical-image::before {
+    left: -8px; /* 从-10px缩小到-8px */
+    right: -8px; /* 从-10px缩小到-8px */
+    top: -16px; /* 从-20px缩小到-16px */
+    bottom: -16px; /* 从-20px缩小到-16px */
+    background: rgba(255, 255, 255, 0.12);
+    filter: blur(10px) saturate(1.25) brightness(1.15);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .left-vertical-image::after {
+    left: -7px; /* 相应调整 */
+    right: -7px; /* 相应调整 */
+    top: -14px; /* 相应调整 */
+    bottom: -14px; /* 相应调整 */
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.04) 25%,
+      rgba(255, 255, 255, 0.005) 50%,
+      rgba(255, 255, 255, 0.04) 75%,
+      rgba(255, 255, 255, 0.15) 100%
+    );
+    filter: blur(0.3px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+@media (max-width: 480px) {
+  .left-vertical-image-content {
+    max-height: 100px; /* 从85px增加到100px，继续增大 */
+  }
+
+  .left-vertical-image::before {
+    left: -6px; /* 从-8px缩小到-6px */
+    right: -6px; /* 从-8px缩小到-6px */
+    top: -12px; /* 从-15px缩小到-12px */
+    bottom: -12px; /* 从-15px缩小到-12px */
+    background: rgba(255, 255, 255, 0.1);
+    filter: blur(8px) saturate(1.2) brightness(1.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .left-vertical-image::after {
+    left: -5px; /* 相应调整 */
+    right: -5px; /* 相应调整 */
+    top: -10px; /* 相应调整 */
+    bottom: -10px; /* 相应调整 */
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.03) 25%,
+      rgba(255, 255, 255, 0.003) 50%,
+      rgba(255, 255, 255, 0.03) 75%,
+      rgba(255, 255, 255, 0.12) 100%
+    );
+    filter: blur(0.3px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* 蒙版切换按钮 */
+/*
+.mask-toggle {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 1000;
+  background: transparent;
+  justify-content: center;
+}
+*/
+
+.mask-toggle-btn {
+  width: 8px; /* 更小 */
+  height: 8px; /* 更小 */
+  border: none;
+  border-radius: 50%;
+  background: #cccccc; /* 浅灰色 - 未选中 */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  min-width: 8px;
+}
+
+.mask-toggle-btn.active {
+  background: #666666; /* 深灰色 - 选中时整个圆点变深灰 */
+}
+
+/* 移除不需要的内部圆点样式 */
+.mask-toggle-btn .mask-dot {
+  display: none; /* 隐藏内部圆点 */
+}
+
+/* 页面高度调整 - 确保有足够空间显示切换按钮 */
+.App {
+  width: 100%;
+  min-height: 100vh; /* 使用min-height而不是height */
+  position: relative;
+  overflow: visible;
+  /* 移除底部额外空间以避免footer下方留白 */
+}
+
+.YouTubeBackground {
+  height: calc(100vh - 12rem); /* 从10rem增加到12rem，视频更矮 */
+  max-height: calc(100vh - 12rem); /* 限制最大高度 */
+  overflow: hidden;
+  position: relative;
+}
+
+/* 蒙版切换按钮 */
+/*
+.mask-toggle {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 1000;
+  background: transparent;
+  justify-content: center;
+}
+*/
+
+.mask-toggle-btn {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+  background: #cccccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  min-width: 8px;
+  pointer-events: auto; /* 恢复按钮本身的点击事件 */
+}
+
+.mask-toggle-btn.active {
+  background: #666666;
+}
+
+.mask-toggle-btn .mask-dot {
+  display: none;
+}
+
+/* 为App添加底部空间，确保切换按钮有显示空间 */
+
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .YouTubeBackground {
+    height: calc(100vh - 10rem); /* 从8rem增加到10rem，平板端视频更矮 */
+    max-height: calc(100vh - 10rem);
+  }
+
+  .mask-toggle {
+    bottom: 2rem;
+  }
+
+  .App::after {
+    height: 10rem; /* 平板端10rem */
+  }
+}
+
+@media (max-width: 480px) {
+  .YouTubeBackground {
+    height: calc(100vh - 8rem); /* 从6rem增加到8rem，小屏幕视频更矮 */
+    max-height: calc(100vh - 8rem);
+  }
+
+  .mask-toggle {
+    bottom: 1.5rem;
+  }
+
+  .App::after {
+    height: 8rem; /* 小屏幕8rem */
+  }
+}
+
+/* 蒙版2: 手机风格 - 只保留灵动岛 */
+
+/* 灵动岛上方的iPhone UI图像 */
+.phone-ui-image {
+  position: absolute;
+  left: 27px; /* 与灵动岛中心对齐 (20px + 35px/2 - 14px/2 = 27px) */
+  top: 15%; /* 恢复原来的上方位置 */
+  transform: translateY(-50%);
+  width: 14px;
+  z-index: 26;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 添加渐隐渐现效果 */
+  transition: opacity 0.5s ease-in-out;
+}
+
+.phone-ui-content {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+/* 左侧灵动岛 - 进一步加宽设计 */
+.phone-dynamic-island {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35px;
+  height: 120px;
+  background: #000000;
+  border-radius: 17px;
+  z-index: 25;
+  pointer-events: none;
+  box-shadow: 
+    0 0 10px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  /* 添加渐隐渐现效果 */
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* 竖直时间显示 */
+.phone-time-display {
+  position: absolute;
+  left: 27px; /* 与灵动岛中心对齐 (20px + 35px/2 - 35px/2 = 20px，但考虑文字宽度调整为27px) */
+  bottom: 80px; /* 恢复原来的下方位置 */
+  width: 35px;
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 添加渐隐渐现效果 */
+  transition: opacity 0.5s ease-in-out;
+}
+
+.phone-time-text {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  letter-spacing: 1px;
+  /* 横向文字逆时针旋转90度，让底部朝向右边 */
+  transform: rotate(-90deg);
+  transform-origin: center;
+  white-space: nowrap;
+  /* 纯粹的反向颜色效果 */
+  mix-blend-mode: difference;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .phone-ui-image {
+    left: 21px; /* 与灵动岛中心对齐 (15px + 28px/2 - 12px/2 = 23px，调整为21px) */
+    top: 12%;
+    width: 12px;
+  }
+  
+  .phone-dynamic-island {
+    width: 28px;
+    height: 100px;
+    left: 15px;
+    border-radius: 14px;
+  }
+  
+  .phone-time-display {
+    left: 21px; /* 与灵动岛中心对齐 */
+    bottom: 70px;
+    width: 28px;
+  }
+  
+  .phone-time-text {
+    font-size: 14px;
+    font-weight: 800;
+    transform: rotate(-90deg);
+    mix-blend-mode: difference;
+  }
+}
+
+@media (max-width: 480px) {
+  .phone-ui-image {
+    left: 17px; /* 与灵动岛中心对齐 (12px + 22px/2 - 10px/2 = 18px，调整为17px) */
+    top: 10%;
+    width: 10px;
+  }
+  
+  .phone-dynamic-island {
+    width: 22px;
+    height: 80px;
+    left: 12px;
+    border-radius: 11px;
+  }
+  
+  .phone-time-display {
+    left: 17px; /* 与灵动岛中心对齐 */
+    bottom: 60px;
+    width: 22px;
+  }
+  
+  .phone-time-text {
+    font-size: 12px;
+    font-weight: 800;
+    transform: rotate(-90deg);
+    mix-blend-mode: difference;
+  }
+}
+
+/* 移除所有旧的手机边框样式 */
+.phone-outer-frame,
+.phone-border,
+.phone-border-top,
+.phone-border-bottom,
+.phone-border-left,
+.phone-border-right,
+.phone-left-accent,
+.phone-left-rectangle,
+.phone-frame,
+.phone-frame-border {
+  display: none;
+}
+
+/* 蒙版容器样式 */
+.mask-1, .mask-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.mask-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mask-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+.phone-ui-image {
+  position: absolute;
+  left: 27px;
+  top: 15%;
+  transform: translateY(-50%);
+  width: 14px;
+  z-index: 26;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 移除 transition: opacity 0.5s ease-in-out; */
+}
+
+.phone-dynamic-island {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35px;
+  height: 120px;
+  background: #000000;
+  border-radius: 17px;
+  z-index: 25;
+  pointer-events: none;
+  box-shadow: 
+    0 0 10px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  /* 移除 transition: opacity 0.5s ease-in-out; */
+}
+
+.phone-time-display {
+  position: absolute;
+  left: 27px;
+  bottom: 80px;
+  width: 35px;
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 移除 transition: opacity 0.5s ease-in-out; */
+}
+
+/* Logo循环展示区域 */
+.logo-section {
+  width: 100%;
+  height: 120px;
+  background: #F0F0F0;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0; /* 确保没有底部边距 */
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .logo-section {
+    height: 100px;
+    padding: 0 1rem;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-section {
+    height: 80px;
+    padding: 0 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+/* 确保页面可以滚动 */
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Global scrollbar styling */
+html {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #D89ADC transparent;
+  background-color: #F0F0F0; /* ensure track area inherits page color */
+}
+
+/* WebKit (Chrome/Safari/Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent; /* hide track background */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* no white gutter */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #D89ADC;
+  border-radius: 9999px;
+  border: 2px solid transparent; /* creates padding around thumb */
+  background-clip: padding-box;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: visible;
+  background-color: #F0F0F0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Logo循环展示区域 */
+.logo-section {
+  width: 100%;
+  height: 120px;
+  background: #F0F0F0;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0; /* 确保没有底部边距 */
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .logo-section {
+    height: 100px;
+    padding: 0 1rem;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-section {
+    height: 80px;
+    padding: 0 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+/* Coming Soon 提示弹窗样式 */
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.success-modal {
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 100px;
+  padding: 0.9rem 2.5rem;
+  max-width: 500px;
+  width: 80%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.success-content {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.success-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+.success-text {
+  flex: 1;
+  text-align: left;
+}
+
+.success-title {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #000000;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.success-message {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #333333;
+  margin: 0;
+  line-height: 1.3;
+}

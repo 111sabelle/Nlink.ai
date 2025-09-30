@@ -1,0 +1,55 @@
+.draggable-text {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.1s ease;
+  z-index: 10;
+  height: 60px; /* 从45px增加到60px */
+  width: auto;
+  object-fit: contain;
+}
+
+.draggable-text:hover {
+  transform: scale(1.05);
+}
+
+.draggable-text.dragging {
+  cursor: grabbing;
+  transform: scale(1.1) rotate(2deg); /* 拖动时轻微旋转 */
+  z-index: 20;
+  transition: none;
+  filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3)); /* 拖动时阴影 */
+}
+
+.draggable-text.bouncing {
+  cursor: default;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2)); /* 弹跳时阴影 */
+  animation: bounce-glow 0.3s ease-in-out infinite alternate; /* 弹跳发光效果 */
+}
+
+.draggable-text:active {
+  cursor: grabbing;
+}
+
+/* 弹跳发光动画 */
+@keyframes bounce-glow {
+  from {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2)) brightness(1);
+  }
+  to {
+    filter: drop-shadow(2px 2px 8px rgba(255, 255, 255, 0.5)) brightness(1.1);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .draggable-text {
+    height: 50px; /* 从38px增加到50px */
+  }
+}
+
+@media (max-width: 480px) {
+  .draggable-text {
+    height: 42px; /* 从32px增加到42px */
+  }
+}

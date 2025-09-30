@@ -1,0 +1,355 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.spline-dual-section {
+  width: 100% !important;
+  height: 500vh !important; /* 增加高度，为SocialShowcase覆盖留出滚动空间 */
+  background: transparent;
+  position: relative;
+  overflow: visible !important;
+  margin-top: 0;
+  padding-top: 6rem;
+  z-index: 10; /* 确保能覆盖在下方内容上 */
+}
+
+.spline-dual-container {
+  width: 100%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4rem;
+  box-sizing: border-box;
+}
+
+.spline-dual-container.locked {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  padding: 0 4rem;
+  z-index: 10; /* 降低z-index，让SocialShowcase能覆盖 */
+  background: #f5f5f5; /* 添加背景色，作为"幕布" */
+}
+
+.spline-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6vh 4rem; /* 上下加 6vh 让文本有更多活动空间 */
+  will-change: transform, opacity;
+  transition: none; /* 禁用CSS transition，使用JS控制 */
+  background: transparent; /* 默认透明 */
+}
+
+/* 第三页特殊处理：保持透明背景让SocialShowcase覆盖 */
+.spline-page-third {
+  background: transparent !important; /* 透明背景，允许被覆盖 */
+}
+
+.spline-page-first {
+  grid-template-areas: "model text";
+}
+
+.spline-page-second {
+  grid-template-areas: "text model";
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 4rem;
+  max-width: 1500px;
+}
+
+.spline-page-third {
+  grid-template-areas: "model text";
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  width: 100% !important; /* 确保填满整个容器宽度 */
+  max-width: none !important; /* 移除最大宽度限制 */
+  margin: 0 auto; /* 居中对齐 */
+  padding: 6vh 4rem; /* 恢复正常的上下边距，让内容居中 */
+  align-items: center; /* 让内容居中对齐，通过JS动画控制位置 */
+}
+
+.spline-page-first .spline-model {
+  grid-area: model;
+}
+
+.spline-page-first .content-text {
+  grid-area: text;
+}
+
+.spline-page-second .content-text {
+  grid-area: text;
+}
+
+.spline-page-second .spline-model {
+  grid-area: model;
+}
+
+.spline-model {
+  width: 100% !important;
+  height: 90vh !important;
+  position: relative;
+  will-change: transform, opacity;
+  overflow: visible !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -15vh !important;
+  margin-bottom: -15vh !important;
+}
+
+.spline-model spline-viewer {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 20px;
+  box-shadow: none;
+  background: transparent;
+  transform: scale(0.8) !important;
+  transform-origin: center !important;
+}
+
+/* 第二页模型稍作放大以填充更多可视宽度 */
+.spline-page-second .spline-model spline-viewer {
+  transform: scale(0.85) !important;
+}
+
+/* 第三页图片适配容器尺寸 */
+.spline-page-third .spline-model img {
+  max-width: 80%;
+  max-height: 80%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+/* 加载状态样式 */
+.spline-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #000000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.spline-loading p {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666666;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 错误状态样式 */
+.spline-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 0, 0, 0.05);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.spline-error p {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #cc0000;
+  margin: 0 0 1rem 0;
+}
+
+.spline-error button {
+  padding: 0.5rem 1rem;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.spline-error button:hover {
+  background: #333333;
+}
+
+/* 文本内容样式 */
+.content-text {
+  will-change: transform, opacity;
+}
+
+.content-text-left {
+  text-align: left; /* 第二页面左侧文本左对齐 */
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .spline-dual-container {
+    padding: 0 2rem;
+  }
+  
+  .spline-page {
+    gap: 4rem;
+    padding: 0 2rem;
+  }
+  
+  .spline-page-third {
+    padding: 6vh 2rem; /* 响应式：恢复正常边距 */
+    align-items: center;
+  }
+  
+  .spline-model {
+    height: 85vh !important;
+    margin-top: -12vh !important;
+    margin-bottom: -12vh !important;
+  }
+  
+  .spline-model spline-viewer {
+    transform: scale(0.75) !important;
+  }
+}
+
+@media (max-width: 968px) {
+  .spline-dual-section {
+    height: 400vh !important; /* 平板设备适配，为覆盖效果留出空间 */
+  }
+  
+  .spline-page {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    grid-template-areas: 
+      "text"
+      "model" !important; /* 移动端都是文本在上，模型在下 */
+  }
+  
+  .spline-page-first .spline-model,
+  .spline-page-second .spline-model {
+    grid-area: model;
+    order: 2;
+  }
+  
+  .spline-page-first .content-text,
+  .spline-page-second .content-text {
+    grid-area: text;
+    order: 1;
+    text-align: center;
+  }
+  
+  .spline-model {
+    height: 50vh !important;
+    margin-top: -5vh !important;
+    margin-bottom: -5vh !important;
+  }
+  
+  .spline-model spline-viewer {
+    transform: scale(0.7) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .spline-dual-container {
+    padding: 0 1rem;
+  }
+  
+  .spline-page {
+    padding: 0 1rem;
+    gap: 2rem;
+  }
+  
+  .spline-page-third {
+    padding: 6vh 1rem; /* 平板：恢复正常边距 */
+    align-items: center;
+  }
+  
+  .spline-model {
+    height: 45vh !important;
+    margin-top: -3vh !important;
+    margin-bottom: -3vh !important;
+  }
+  
+  .spline-model spline-viewer {
+    transform: scale(0.65) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .spline-dual-section {
+    margin-top: 0;
+    padding-top: 3rem;
+    height: 350vh !important; /* 手机设备适配，为覆盖效果留出空间 */
+  }
+  
+  .spline-dual-container {
+    padding: 0 0.5rem;
+  }
+  
+  .spline-page {
+    padding: 0 0.5rem;
+  }
+  
+  .spline-page-third {
+    padding: 6vh 0.5rem; /* 手机：恢复正常边距 */
+    align-items: center;
+  }
+  
+  .spline-model {
+    height: 40vh !important;
+    margin-top: -2vh !important;
+    margin-bottom: -2vh !important;
+  }
+  
+  .spline-model spline-viewer {
+    transform: scale(0.6) !important;
+  }
+  
+  .main-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .description {
+    font-size: 0.8rem;
+    font-weight: 500;
+    max-width: 300px;
+  }
+}

@@ -1,0 +1,27 @@
+.user-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #000000;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.user-icon:hover {
+  background: #333333;
+  transform: scale(1.05);
+}
+
+.user-icon:active {
+  transform: scale(0.95);
+}
+
+.user-icon svg {
+  width: 20px;
+  height: 20px;
+}

@@ -1,0 +1,120 @@
+.youtube-video-section {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+}
+
+/* 背景视频容器 */
+.youtube-video-container.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* 背景视频播放器 */
+.youtube-video-player.background-player {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw;
+  min-height: 100vh;
+  min-width: 177.78vh;
+  transform: translate(-50%, -50%);
+  border: none;
+  outline: none;
+  z-index: 1;
+  /* filter: blur(5px); */ /* 临时移除，调试 */
+  background: red; /* 临时背景色 */
+}
+
+/* 黑色蒙版覆盖层 */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 小视频容器 - 绝对定位居中 */
+.small-video-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 800px;
+  height: 450px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+/* 小视频播放器 */
+.small-video-player {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+}
+
+/* YouTube Player API生成的iframe */
+.small-video-player iframe,
+.background-player iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+  outline: none;
+  /* pointer-events: none; */ /* 临时启用 */
+}
+
+/* 禁用视频交互 */
+.small-video-player,
+.background-player {
+  /* pointer-events: none; */ /* 临时启用，确保iframe能创建 */
+}
+
+/* 确保背景视频完全填充屏幕 */
+@media (max-aspect-ratio: 16/9) {
+  .youtube-video-player.background-player {
+    width: 177.78vh;
+    height: 100vh;
+  }
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .youtube-video-player.background-player {
+    width: 100vw;
+    height: 56.25vw;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .small-video-container {
+    width: 600px;
+    height: 337px;
+  }
+  
+  .youtube-video-player.background-player {
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 100vh;
+    min-width: 177.78vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .small-video-container {
+    width: 500px;
+    height: 281px;
+  }
+}

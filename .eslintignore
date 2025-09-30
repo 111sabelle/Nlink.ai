@@ -1,0 +1,8 @@
+# Ignore Singularity demo sources that still contain TS/Flow types
+src/components/singularity/models/**
+src/components/singularity/utils/**
+src/components/singularity/ContainerModel.jsx
+src/components/singularity/DraggableRigidBody.jsx
+src/components/singularity/CustomDragControls.jsx
+src/components/singularity/SmoothOrbitControls.jsx
+src/components/singularity/LoadingScreen.jsx
