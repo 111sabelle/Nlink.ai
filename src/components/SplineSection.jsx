@@ -14,6 +14,7 @@ const SplineSection = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const targetProgressRef = useRef(0);
   const smoothProgressRef = useRef(0);
+  const scrollProgressRef = useRef(0);
   const rafLoopRef = useRef(0);
   const [isPinned, setIsPinned] = useState(false);
   const [splineLoaded, setSplineLoaded] = useState(false);
@@ -74,10 +75,10 @@ const SplineSection = () => {
     const rect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     const sectionHeight = rect.height;
+    const sectionTop = rect.top;
     
     // 计算 pin 区间
-    const sectionTop = rect.top;
-  const pinDistance = Math.max(1, sectionHeight - windowHeight);
+    const pinDistance = Math.max(1, sectionHeight - windowHeight);
     const inPinRange = sectionTop <= 0 && sectionTop >= -pinDistance;
 
     // 计算进度来决定是否pin
@@ -101,6 +102,8 @@ const SplineSection = () => {
     }
     
     targetProgressRef.current = progress;
+
+    // 始终保持动画循环，由内部阈值控制是否触发 setState
   }, []);
 
   useEffect(() => {
@@ -116,7 +119,14 @@ const SplineSection = () => {
     // 初始计算一次
     handleScroll();
 
-    // 渲染循环：对目标进度做指数平滑，避免突变和抖动
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [updateScrollAnimation]);
+
+  // RAF 渲染循环：独立运行，避免因 scrollProgress 改变而重启
+  useEffect(() => {
     const tick = () => {
       const current = smoothProgressRef.current;
       const target = targetProgressRef.current;
@@ -126,20 +136,22 @@ const SplineSection = () => {
       smoothProgressRef.current = next;
       
       // 优化：只在变化足够大时才更新state，减少不必要的重渲染
-      if (Math.abs(next - scrollProgress) > 0.0008) {
+      const currentScrollProgress = scrollProgressRef.current;
+      if (Math.abs(next - currentScrollProgress) > 0.0008) {
         setScrollProgress(next);
+        scrollProgressRef.current = next;
       }
       // 保持RAF循环持续运行，确保平滑动画不中断
       rafLoopRef.current = requestAnimationFrame(tick);
     };
+    
+    // 启动循环
     rafLoopRef.current = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
       if (rafLoopRef.current) cancelAnimationFrame(rafLoopRef.current);
     };
-  }, [updateScrollAnimation, scrollProgress]);
+  }, []);
 
   // 缓动函数
   const easeInOutCubic = (t) => {
