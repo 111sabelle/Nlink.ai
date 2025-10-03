@@ -72,7 +72,7 @@ const CTASection = () => {
               <div className="cta-text-area">
                 <h2 className="cta-title">What will you place?</h2>
                 <BlurText
-                  text="Play NLink now"
+                  text="Play Nlink now"
                   delay={200}
                   animateBy="words"
                   direction="top"

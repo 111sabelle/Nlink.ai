@@ -45,11 +45,14 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   background: #FFFFFF;
   border: 2px solid #000000;
-  border-radius: 21px;
-  padding: 8px 16px;
+  border-radius: 50%; /* 改为圆形 */
+  padding: 12px; /* 调整为正方形padding */
+  width: 44px; /* 固定宽度 */
+  height: 44px; /* 固定高度 */
   cursor: pointer;
   color: #000000;
   font-weight: 500;
@@ -63,17 +66,11 @@
 .sm-toggle:focus-visible {
   outline: 2px solid #00000066;
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 50%; /* 改为圆形 */
 }
 
 .sm-toggle-textWrap {
-  position: relative;
-  display: inline-block;
-  height: 1em;
-  overflow: hidden;
-  white-space: nowrap;
-  width: var(--sm-toggle-width, auto);
-  min-width: var(--sm-toggle-width, auto);
+  display: none; /* 隐藏文字 */
 }
 
 .sm-toggle-textInner {
@@ -90,9 +87,9 @@
 
 .sm-icon {
   position: relative;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
+  width: 18px; /* 增大icon尺寸 */
+  height: 18px; /* 增大icon尺寸 */
+  flex: 0 0 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -112,7 +109,7 @@
 }
 
 .staggered-menu-panel {
-  position: absolute;
+  position: fixed; /* 改为fixed确保在滚动时也固定 */
   top: 0;
   right: 0;
   width: clamp(260px, 38vw, 420px);
@@ -124,7 +121,7 @@
   flex-direction: column;
   padding: 6em 2em 2em 2em;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 100; /* 大幅提高z-index，确保在所有内容之上 */
 }
 
 [data-position='left'] .staggered-menu-panel {
@@ -133,13 +130,13 @@
 }
 
 .sm-prelayers {
-  position: absolute;
+  position: fixed; /* 改为fixed确保在滚动时也固定 */
   top: 0;
   right: 0;
   bottom: 0;
   width: clamp(260px, 38vw, 420px);
   pointer-events: none;
-  z-index: 5;
+  z-index: 90; /* 提高z-index，在面板之下但在其他内容之上 */
 }
 
 [data-position='left'] .sm-prelayers {
@@ -314,11 +311,27 @@
   }
 }
 
+@media (max-width: 968px) {
+  /* 移动端：确保导航固定在顶部 */
+  .staggered-menu-header {
+    position: fixed; /* 改为fixed，确保滚动时固定 */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 110; /* 确保header在面板之上 */
+    padding: 1.5em;
+  }
+}
+
 @media (max-width: 640px) {
   .staggered-menu-panel {
     width: 100%;
     left: 0;
     right: 0;
+  }
+  
+  .staggered-menu-header {
+    padding: 1em; /* 小屏幕减少padding */
   }
   
   .sm-logo {
@@ -330,7 +343,14 @@
   }
   
   .sm-toggle {
-    padding: 6px 12px;
-    font-size: 0.9rem;
+    padding: 10px; /* 移动端稍小一点 */
+    width: 40px;
+    height: 40px;
+  }
+  
+  .sm-icon {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
   }
 }

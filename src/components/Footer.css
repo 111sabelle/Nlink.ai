@@ -60,6 +60,15 @@
   align-self: flex-start;
 }
 
+/* 默认显示桌面端社交媒体 */
+.footer-social-desktop {
+  display: flex;
+}
+
+.footer-social-mobile {
+  display: none;
+}
+
 .footer-social a {
   width: 40px;
   height: 40px;
@@ -116,7 +125,7 @@
 }
 
 .footer-description {
-  font-size: 0.95rem;
+  font-size: 0.8rem; /* 缩小字体 */
   line-height: 1.35;
   color: #333333;
   margin: 0;
@@ -170,71 +179,129 @@
   color: #999999;
 }
 
-/* 响应式设计 */
+/* 桌面端样式 */
+@media (min-width: 1201px) {
+  .footer-social-desktop {
+    display: flex !important;
+  }
+  
+  .footer-social-mobile {
+    display: none !important;
+  }
+}
+
+/* 响应式设计 - 移动端 */
 @media (max-width: 1200px) {
+  .footer-section {
+    padding: 3rem 2rem 1.5rem 2rem;
+  }
+  
   .footer-container {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 两列：左侧logo+文字，右侧模型 */
+    gap: 1.5rem;
+    align-items: start;
   }
 
   .footer-left {
-    flex-direction: column;
-    align-items: center;
+    min-height: auto;
+    align-items: flex-start; /* 左对齐 */
   }
 
   .footer-left-content {
-    align-items: center;
+    align-items: flex-start; /* 左对齐 */
+    gap: 0.8rem;
+  }
+
+  .footer-logo img {
+    width: 60px;
+    height: 60px;
   }
 
   .footer-title {
-    font-size: 2rem;
-    text-align: center;
+    font-size: 1.4rem;
+    text-align: left; /* 左对齐 */
+  }
+
+  /* 桌面端社交媒体隐藏 */
+  .footer-social-desktop {
+    display: none;
   }
 
   .footer-center {
-    width: 280px;
-    height: 280px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 220px;
+    height: 220px;
+    margin: 0;
+    justify-self: end; /* 右对齐 */
   }
 
+  /* 右侧内容区域改为居中显示在下方 */
   .footer-right {
+    grid-column: 1 / -1; /* 占满两列 */
+    order: 3;
     align-items: center;
     padding-left: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .footer-description {
     text-align: center;
     max-width: 100%;
+    order: 2; /* 描述文字排在按钮后面 */
+    font-size: 0.75rem; /* 移动端进一步缩小 */
   }
-
-  .footer-social {
+  
+  .footer-cta-button {
+    align-self: center;
+    order: 1; /* 按钮排在最前 */
+  }
+  
+  /* 移动端社交媒体居中显示在右侧内容后 */
+  .footer-social-mobile {
+    display: flex;
     justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .footer-section {
-    padding: 2.5rem 2rem 1.5rem 2rem;
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .footer-logo img {
+    width: 55px;
+    height: 55px;
   }
 
   .footer-title {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
   }
 
   .footer-center {
-    width: 240px;
-    height: 240px;
+    max-width: 180px;
+    height: 180px;
   }
 
   .footer-description {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     line-height: 1.4;
   }
 
   .footer-cta-button {
-    width: 100%;
-    justify-content: center;
+    width: auto;
+    padding: 0.8rem 1.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .footer-cta-icon {
+    width: 28px;
+    height: 28px;
   }
   
   .footer-copyright {
@@ -246,43 +313,52 @@
   .footer-section {
     padding: 2rem 1rem 1.5rem 1rem;
   }
+  
+  .footer-container {
+    gap: 1rem;
+  }
 
   .footer-logo img {
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
   }
 
   .footer-title {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
 
   .footer-center {
-    width: 200px;
-    height: 200px;
+    max-width: 150px;
+    height: 150px;
   }
 
-  .footer-social {
+  .footer-social-mobile {
     gap: 0.8rem;
   }
 
-  .footer-social a {
+  .footer-social-mobile a {
     width: 36px;
     height: 36px;
   }
 
-  .footer-social svg {
+  .footer-social-mobile svg {
     width: 18px;
     height: 18px;
   }
 
   .footer-description {
-    font-size: 0.85rem;
+    font-size: 0.65rem;
     line-height: 1.4;
   }
 
   .footer-cta-button {
-    font-size: 0.9rem;
-    padding: 0.9rem 1.5rem;
+    font-size: 0.8rem;
+    padding: 0.7rem 1.3rem;
+  }
+  
+  .footer-cta-icon {
+    width: 24px;
+    height: 24px;
   }
   
   .footer-copyright {

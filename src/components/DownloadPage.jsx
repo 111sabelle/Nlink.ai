@@ -217,7 +217,7 @@ const DownloadPage = () => {
         <div className="success-overlay" onClick={() => setShowSuccess(false)}>
           <div className="success-modal" onClick={(e) => e.stopPropagation()}>
             <div className="success-content">
-              <img src={logo2} alt="NLink Logo" className="success-logo" />
+              <img src={logo2} alt="Nlink Logo" className="success-logo" />
               <div className="success-text">
                 <h2 className="success-title">Thank you for joining our waiting list!</h2>
                 <p className="success-message">We will contact you soon.</p>
@@ -232,7 +232,7 @@ const DownloadPage = () => {
         <div className="success-overlay" onClick={() => setComingSoonPage(null)}>
           <div className="success-modal" onClick={(e) => e.stopPropagation()}>
             <div className="success-content">
-              <img src={logo2} alt="NLink Logo" className="success-logo" />
+              <img src={logo2} alt="Nlink Logo" className="success-logo" />
               <div className="success-text">
                 <h2 className="success-title">{getComingSoonText(comingSoonPage)} is coming soon.</h2>
                 <p className="success-message">Get ready for something exciting!</p>
@@ -296,7 +296,7 @@ const DownloadPage = () => {
               menuButtonColor="#000000"
               openMenuButtonColor="#000000"
               changeMenuColorOnOpen={false}
-              colors={['#E8E8E8', '#D8D8D8']}
+              colors={['#B9FBB7', '#FFD5FF']}
               logoUrl={centerLogo}
               accentColor="#FEC9FF"
             />
@@ -305,8 +305,35 @@ const DownloadPage = () => {
 
         {/* 主要内容区域 */}
         <div className="download-main-content">
-          {/* 左侧竖直文字 */}
-          <div className="download-vertical-text">
+          {/* 移动端：顶部Spline模型区域 */}
+          <div className="download-mobile-spline-section">
+            {/* 横向滚动文字背景 */}
+            <div className="download-horizontal-text">
+              <div className="download-horizontal-text-inner">
+                <span className="download-horizontal-text-item">JOINTHEWAITINGLIST</span>
+                <span className="download-horizontal-text-item">JOINTHEWAITINGLIST</span>
+                <span className="download-horizontal-text-item">JOINTHEWAITINGLIST</span>
+                <span className="download-horizontal-text-item">JOINTHEWAITINGLIST</span>
+              </div>
+            </div>
+            {/* Spline 3D模型 */}
+            <div className="download-mobile-spline">
+              {splineLoaded && (
+                <spline-viewer 
+                  url="https://prod.spline.design/X6uIgb9KtS9iKIoJ/scene.splinecode"
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                  onLoad={() => console.log('Mobile Download Spline scene loaded')}
+                  onError={(error) => console.error('Mobile Download Spline scene error:', error)}
+                />
+              )}
+            </div>
+          </div>
+
+          {/* 左侧竖直文字 - 桌面端 */}
+          <div className="download-vertical-text download-vertical-text-desktop">
             <div className="download-vertical-text-inner">
               <span className="download-vertical-text-item">JOINTHEWAITINGLIST</span>
               <span className="download-vertical-text-item">JOINTHEWAITINGLIST</span>
@@ -341,7 +368,7 @@ const DownloadPage = () => {
                   className="download-sticker"
                 />
               </div>
-              <p className="download-form-subtitle">Get on the NLink waiting list—shape reality with us.</p>
+              <p className="download-form-subtitle">Get on the Nlink waiting list—shape reality with us.</p>
             </div>
 
             <form className="download-form" onSubmit={handleSubmit}>
@@ -431,7 +458,7 @@ const DownloadPage = () => {
                     onChange={handleInputChange}
                     className="download-form-checkbox"
                   />
-                  <span className="download-form-checkbox-text">Sign me up for the NLink newsletter</span>
+                  <span className="download-form-checkbox-text">Sign me up for the Nlink newsletter</span>
                 </label>
               </div>
 

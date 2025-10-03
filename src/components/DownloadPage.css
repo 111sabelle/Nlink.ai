@@ -192,7 +192,12 @@
   position: relative;
 }
 
-/* 左侧竖直文字 */
+/* 移动端Spline模型区域 - 默认隐藏 */
+.download-mobile-spline-section {
+  display: none;
+}
+
+/* 左侧竖直文字 - 桌面端 */
 .download-vertical-text {
   position: fixed;
   left: 5rem;
@@ -435,19 +440,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.8rem;
   background: linear-gradient(90deg, #FFDEF9 0%, #C3F4DE 100%);
   border: none;
   border-radius: 50px;
-  padding: 0.8rem 0.8rem 0.8rem 2rem;
+  padding: 0.7rem 0.7rem 0.7rem 1.5rem; /* 缩小padding */
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.85rem; /* 缩小字体 */
   font-weight: 600;
   color: #000000;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 0.8rem;
   align-self: flex-start;
+  max-width: 280px; /* 限制最大宽度 */
 }
 
 .download-form-submit:hover {
@@ -463,14 +469,14 @@
 }
 
 .download-submit-arrow {
-  width: 32px;
-  height: 32px;
+  width: 28px; /* 缩小圆形图标 */
+  height: 28px;
   background: #FFFFFF;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: transform 0.3s ease;
   flex-shrink: 0;
 }
@@ -506,22 +512,96 @@
     padding: 1rem 1.5rem;
   }
   
-  .download-vertical-text {
-    display: none;
+  /* 移动端：隐藏桌面端的竖向文字和spline */
+  .download-vertical-text-desktop {
+    display: none !important;
   }
   
   .download-spline-overlay {
-    display: none;
+    display: none !important;
+  }
+  
+  /* 移动端：显示spline模型区域 */
+  .download-mobile-spline-section {
+    display: block;
+    width: 100%;
+    height: 55vh; /* 增加高度 */
+    position: relative;
+    overflow: hidden;
+    order: 1;
+    margin-top: -2rem; /* 缩小顶部间距 */
+    margin-bottom: -3rem; /* 缩小底部间距 */
+  }
+  
+  /* 横向滚动文字 */
+  .download-horizontal-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .download-horizontal-text-inner {
+    display: flex;
+    animation: scrollHorizontal 20s linear infinite;
+    will-change: transform;
+  }
+  
+  .download-horizontal-text-item {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 5.5rem; /* 大幅放大文字 */
+    font-weight: 900;
+    color: #000000;
+    white-space: nowrap;
+    padding: 0 2rem;
+    letter-spacing: 0.02em;
+    -webkit-text-stroke: 2px #000000;
+    paint-order: stroke fill;
+  }
+  
+  @keyframes scrollHorizontal {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Spline模型在文字上方 */
+  .download-mobile-spline {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%; /* 大幅放大模型 */
+    max-width: 500px;
+    height: 95%;
+    z-index: 10;
+    pointer-events: auto;
+  }
+  
+  .download-mobile-spline spline-viewer {
+    width: 100%;
+    height: 100%;
+    background: transparent;
   }
   
   .download-main-content {
-    justify-content: center;
-    padding-top: 5rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; /* 让内容居中对齐 */
+    padding-top: 4rem; /* 减少顶部padding */
   }
   
   .download-form-container {
-    margin: 4rem 1.5rem;
-    max-width: 100%;
+    margin: 0 1.5rem 2rem 1.5rem; /* 移除顶部margin，大幅缩小与模型的间距 */
+    max-width: 550px; /* 限制最大宽度 */
+    width: 100%; /* 宽度100%以便居中 */
+    order: 2; /* 表单排在后面 */
   }
   
   .download-form-row {
@@ -545,9 +625,26 @@
     height: 14px;
   }
   
+  /* 调整移动端spline区域 */
+  .download-mobile-spline-section {
+    height: 50vh; /* 增加高度 */
+    margin-top: -1.5rem; /* 缩小顶部间距 */
+    margin-bottom: -2.5rem; /* 缩小底部间距 */
+  }
+  
+  .download-horizontal-text-item {
+    font-size: 4.5rem; /* 放大文字 */
+  }
+  
+  .download-mobile-spline {
+    width: 95%; /* 放大模型 */
+    max-width: 450px;
+  }
+  
   .download-form-container {
     padding: 2rem 1.5rem;
-    margin: 3rem 1rem;
+    margin: 0 auto 2rem auto; /* 居中对齐 */
+    max-width: 550px; /* 限制最大宽度 */
   }
   
   .download-form-title {
@@ -574,9 +671,27 @@
     height: 12px;
   }
   
+  /* 进一步调整移动端spline区域 */
+  .download-mobile-spline-section {
+    height: 45vh; /* 增加高度 */
+    margin-top: -1rem; /* 缩小顶部间距 */
+    margin-bottom: -2rem; /* 缩小底部间距 */
+  }
+  
+  .download-horizontal-text-item {
+    font-size: 3.5rem; /* 放大文字 */
+    padding: 0 1.5rem;
+  }
+  
+  .download-mobile-spline {
+    width: 95%; /* 放大模型 */
+    max-width: 380px;
+  }
+  
   .download-form-container {
     padding: 1.5rem 1rem;
-    margin: 2rem 0.5rem;
+    margin: 0 auto 1.5rem auto; /* 居中对齐 */
+    max-width: 550px; /* 限制最大宽度 */
   }
   
   .download-form-title {
@@ -586,5 +701,16 @@
   .download-form-submit {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* 桌面端样式确保不受移动端影响 */
+@media (min-width: 969px) {
+  .download-mobile-spline-section {
+    display: none !important;
+  }
+  
+  .download-vertical-text-desktop {
+    display: flex !important;
   }
 }

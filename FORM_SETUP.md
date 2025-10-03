@@ -5,7 +5,7 @@
 ### 步骤1: 创建Google Sheets
 
 1. 访问 [Google Sheets](https://sheets.google.com)
-2. 创建新的电子表格，命名为 "NLink Waiting List"
+2. 创建新的电子表格，命名为 "Nlink Waiting List"
 3. 在第一行添加表头：
    - A1: `Timestamp`
    - B1: `Name`

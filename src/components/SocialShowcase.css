@@ -96,18 +96,40 @@
 
 @media (max-width: 968px) {
   .social-section { 
-    padding: 9rem 2rem 4rem 2rem; /* 移动端增加顶部padding */
+    padding: 6rem 1rem 3rem 1rem; /* 减少上下padding */
     margin-top: -70vh; /* 移动端保持覆盖效果 */
+    min-height: 70vh; /* 减少最小高度 */
   }
   .social-header { 
     grid-template-columns: 1fr; 
-    gap: 1rem; 
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
   }
-  .media-row { grid-template-columns: repeat(3, 1fr); }
+  .media-row { 
+    grid-template-columns: repeat(5, 1fr); /* 保持一排5个 */
+    gap: 0.4rem; /* 紧凑间距以适应小屏幕 */
+    width: 115%; /* 稍微超出让左右被裁切 */
+    transform: translateX(-7.5%);
+  }
+  .media-cell {
+    height: min(48vh, 480px); /* 减少高度让整体更紧凑 */
+  }
 }
 
 @media (max-width: 600px) {
-  .media-row { grid-template-columns: repeat(2, 1fr); }
+  .social-section {
+    padding: 5rem 0.5rem 2rem 0.5rem; /* 进一步减少padding */
+    min-height: 60vh;
+  }
+  .media-row { 
+    grid-template-columns: repeat(5, 1fr); /* 保持一排5个 */
+    gap: 0.3rem; /* 最紧凑间距 */
+    width: 118%; /* 更多超出 */
+    transform: translateX(-9%);
+  }
+  .media-cell {
+    height: min(42vh, 400px); /* 小屏幕减少高度 */
+  }
 }
 
 

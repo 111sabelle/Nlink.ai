@@ -37,8 +37,11 @@ const ScrollReveal = ({
     if (!el) return;
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
+    
+    // 存储当前组件创建的ScrollTrigger实例，用于精确清理
+    const triggers = [];
 
-    gsap.fromTo(
+    const rotationTween = gsap.fromTo(
       el,
       { transformOrigin: '0% 50%', rotate: baseRotation },
       {
@@ -53,10 +56,11 @@ const ScrollReveal = ({
         }
       }
     );
+    if (rotationTween.scrollTrigger) triggers.push(rotationTween.scrollTrigger);
 
     const wordElements = el.querySelectorAll('.word');
 
-    gsap.fromTo(
+    const opacityTween = gsap.fromTo(
       wordElements,
       { 
         opacity: baseOpacity, 
@@ -79,9 +83,10 @@ const ScrollReveal = ({
         }
       }
     );
+    if (opacityTween.scrollTrigger) triggers.push(opacityTween.scrollTrigger);
 
     if (enableBlur) {
-      gsap.fromTo(
+      const blurTween = gsap.fromTo(
         wordElements,
         { filter: `blur(${blurStrength}px)` },
         {
@@ -97,10 +102,12 @@ const ScrollReveal = ({
           }
         }
       );
+      if (blurTween.scrollTrigger) triggers.push(blurTween.scrollTrigger);
     }
 
+    // 修复严重性能问题：只清理当前组件的ScrollTrigger，而不是所有页面的
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      triggers.forEach(trigger => trigger.kill());
     };
   }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 

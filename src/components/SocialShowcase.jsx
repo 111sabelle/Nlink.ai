@@ -28,12 +28,20 @@ export default function SocialShowcase() {
       setProgress(p);
     };
 
-    const onScrollRaf = () => {
-      onScroll();
-      rafRef.current = requestAnimationFrame(onScrollRaf);
+    // 优化：使用scroll事件 + RAF节流，而不是连续RAF
+    const handleScroll = () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      rafRef.current = requestAnimationFrame(onScroll);
     };
-    rafRef.current = requestAnimationFrame(onScrollRaf);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // 初始计算一次
+    onScroll();
+    
     return () => {
+      window.removeEventListener('scroll', handleScroll);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);

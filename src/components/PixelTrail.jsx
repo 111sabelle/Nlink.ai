@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { useMemo, useRef } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { shaderMaterial, useTrailTexture, AdaptiveDpr } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -86,6 +86,8 @@ const DotMaterial = shaderMaterial(
 function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixelColor, alphaScale, caOffset, caIntensity }) {
   const size = useThree(s => s.size);
   const viewport = useThree(s => s.viewport);
+  const invalidate = useThree(s => s.invalidate);
+  const lastMoveTime = useRef(0);
 
   const dotMaterial = useMemo(() => {
     const mat = new DotMaterial();
@@ -114,8 +116,25 @@ function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixel
 
   const scale = Math.max(viewport.width, viewport.height) / 2;
 
+  // 优化：鼠标移动时标记时间并触发渲染
+  const handlePointerMove = (e) => {
+    onMove(e);
+    lastMoveTime.current = Date.now();
+    invalidate();
+  };
+
+  // 优化：在trail衰减期间持续渲染，之后停止
+  useFrame(() => {
+    const timeSinceMove = Date.now() - lastMoveTime.current;
+    // 在maxAge时间内持续渲染以显示trail衰减效果
+    if (timeSinceMove < maxAge + 100) {
+      invalidate();
+    }
+    // 超过衰减时间后，停止渲染直到下次鼠标移动
+  });
+
   return (
-    <mesh scale={[scale, scale, 1]} onPointerMove={onMove}>
+    <mesh scale={[scale, scale, 1]} onPointerMove={handlePointerMove}>
       <planeGeometry args={[2, 2]} />
       <primitive
         object={dotMaterial}
@@ -160,7 +179,7 @@ export default function PixelTrail({
         eventSource={document} /* 从document读取指针事件，不依赖canvas捕获 */
         eventPrefix="client" /* 使用clientX/Y匹配document事件 */
         dpr={[1, 1.15]} /* 限制像素比，降低GPU负载 */
-        frameloop="always" /* 始终渲染，确保跟手性最佳 */
+        frameloop="demand" /* 优化：按需渲染，大幅降低GPU消耗 */
       >
         <AdaptiveDpr pixelated />
         <Scene

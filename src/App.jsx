@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import LocalVideoBackground from './components/LocalVideoBackground'; // 替换为本地视频背景
 import PillNav from './components/PillNav';
 import StaggeredMenu from './components/StaggeredMenu';
-import MobileBlocker from './components/MobileBlocker';
 import UserIcon from './components/UserIcon';
 import DraggableText from './components/DraggableText';
 import LogoLoop from './components/LogoLoop';
@@ -86,8 +85,16 @@ function App() {
     { label: 'POINTS', href: '/points' }
   ];
 
-  // 可拖动文字的初始位置（更大的垂直和水平差异）
-  const draggableTexts = [
+  // 可拖动文字的初始位置（响应式布局）
+  const draggableTexts = isMobile ? [
+    // 移动端：居中垂直布局，确保都在屏幕内且居中显示
+    { src: changeImg, alt: 'Change', initialPosition: { x: 80, y: 250 } },
+    { src: realityImg, alt: 'Reality', initialPosition: { x: 230, y: 320 } },
+    { src: inImg, alt: 'In', initialPosition: { x: 130, y: 390 } },
+    { src: realImg, alt: 'Real', initialPosition: { x: 260, y: 460 } },
+    { src: timeImg, alt: 'Time', initialPosition: { x: 170, y: 530 } }
+  ] : [
+    // 桌面端：原有的分散布局
     { src: changeImg, alt: 'Change', initialPosition: { x: 100, y: 150 } },
     { src: realityImg, alt: 'Reality', initialPosition: { x: 350, y: 450 } },
     { src: inImg, alt: 'In', initialPosition: { x: 600, y: 200 } },
@@ -164,12 +171,7 @@ function App() {
 
   // 渲染不同的页面
   if (currentPage === '/download') {
-    return isMobile ? <MobileBlocker /> : <DownloadPage />;
-  }
-
-  // 如果是移动端，显示移动端提示页面
-  if (isMobile) {
-    return <MobileBlocker />;
+    return <DownloadPage />;
   }
 
   // 获取Coming Soon提示文字
@@ -192,7 +194,7 @@ function App() {
         <div className="success-overlay" onClick={() => setComingSoonPage(null)}>
           <div className="success-modal" onClick={(e) => e.stopPropagation()}>
             <div className="success-content">
-              <img src={logo2} alt="NLink Logo" className="success-logo" />
+              <img src={logo2} alt="Nlink Logo" className="success-logo" />
               <div className="success-text">
                 <h2 className="success-title">{getComingSoonText(comingSoonPage)} is coming soon.</h2>
                 <p className="success-message">Get ready for something exciting!</p>
@@ -258,7 +260,7 @@ function App() {
               menuButtonColor="#000000"
               openMenuButtonColor="#000000"
               changeMenuColorOnOpen={false}
-              colors={['#FFFFFF', '#F5F5F5']}
+              colors={['#B9FBB7', '#FFD5FF']}
               logoUrl={centerLogo}
               accentColor="#FEC9FF"
             />
@@ -302,46 +304,50 @@ function App() {
             </div>
           </div>
 
-          {/* 蒙版2: 手机风格 - 始终渲染但控制透明度 */}
-          <div className={`mask-2 ${currentMask === 2 ? 'mask-visible' : 'mask-hidden'}`}>
-            {/* 灵动岛上方的iPhone UI图像 */}
-            <div className="phone-ui-image">
-              <img
-                src={iphoneUiImg}
-                alt="iPhone UI"
-                className="phone-ui-content"
-              />
+          {/* 蒙版2: 手机风格 - 始终渲染但控制透明度，移动端隐藏 */}
+          {!isMobile && (
+            <div className={`mask-2 ${currentMask === 2 ? 'mask-visible' : 'mask-hidden'}`}>
+              {/* 灵动岛上方的iPhone UI图像 */}
+              <div className="phone-ui-image">
+                <img
+                  src={iphoneUiImg}
+                  alt="iPhone UI"
+                  className="phone-ui-content"
+                />
+              </div>
+              
+              {/* 左侧灵动岛样式 */}
+              <div className="phone-dynamic-island"></div>
+              
+              {/* 竖直时间显示 */}
+              <div className="phone-time-display">
+                <span className="phone-time-text">{formatTime(currentTime)}</span>
+              </div>
             </div>
-            
-            {/* 左侧灵动岛样式 */}
-            <div className="phone-dynamic-island"></div>
-            
-            {/* 竖直时间显示 */}
-            <div className="phone-time-display">
-              <span className="phone-time-text">{formatTime(currentTime)}</span>
-            </div>
-          </div>
+          )}
         </LocalVideoBackground>
       </div>
 
-      {/* 控制区域 - 位于视频下方 */}
-      <div className="control-area">
-        {/* 蒙版切换按钮 */}
-        <div className="mask-toggle">
-          <button
-            className={`mask-toggle-btn ${currentMask === 1 ? 'active' : ''}`}
-            onClick={() => handleMaskToggle(1)}
-          >
-            <div className="mask-dot"></div>
-          </button>
-          <button
-            className={`mask-toggle-btn ${currentMask === 2 ? 'active' : ''}`}
-            onClick={() => handleMaskToggle(2)}
-          >
-            <div className="mask-dot"></div>
-          </button>
+      {/* 控制区域 - 位于视频下方，仅在桌面端显示 */}
+      {!isMobile && (
+        <div className="control-area">
+          {/* 蒙版切换按钮 */}
+          <div className="mask-toggle">
+            <button
+              className={`mask-toggle-btn ${currentMask === 1 ? 'active' : ''}`}
+              onClick={() => handleMaskToggle(1)}
+            >
+              <div className="mask-dot"></div>
+            </button>
+            <button
+              className={`mask-toggle-btn ${currentMask === 2 ? 'active' : ''}`}
+              onClick={() => handleMaskToggle(2)}
+            >
+              <div className="mask-dot"></div>
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Logo循环展示区域 */}
       <div className="logo-section">

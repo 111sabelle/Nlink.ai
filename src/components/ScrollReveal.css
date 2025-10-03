@@ -17,6 +17,25 @@
   margin: 0 0 2rem 0;
 }
 
+.spline-title-group {
+  margin: 0 0 2rem 0;
+}
+
+.spline-title-group .spline-title {
+  margin: 0;
+  margin-bottom: -0.5rem; /* 减少两行之间的间距 */
+}
+
+.spline-title-group .spline-title:last-child {
+  margin-bottom: 0; /* 最后一行不需要负margin */
+}
+
+.spline-title-text-line1,
+.spline-title-text-line2 {
+  display: block;
+  line-height: 0.9; /* 更紧凑的行高 */
+}
+
 .spline-title-text {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(2.2rem, 6vw, 4rem);
@@ -54,42 +73,60 @@
 
 @media (max-width: 968px) {
   .spline-title-text {
-    font-size: 2.6rem;
+    font-size: 3.2rem; /* 放大标题 */
     font-weight: 500;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left; /* 居左对齐 */
+  }
+  
+  .spline-title-group .spline-title {
+    margin-bottom: -0.8rem; /* 移动端进一步缩小行距 */
   }
   
   .spline-description-text {
-    font-size: 0.95rem;
+    font-size: 1.1rem; /* 放大描述文字 */
     font-weight: 500;
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 50%; /* 继续缩小宽度，让文字多排更多行 */
+    margin: 0; /* 移除auto居中 */
+    text-align: left; /* 居左对齐 */
+    padding: 0; /* 移除左右padding */
   }
 }
 
 @media (max-width: 768px) {
   .spline-title-text {
-    font-size: 2.2rem;
+    font-size: 2.8rem; /* 放大标题 */
     font-weight: 500;
+    text-align: left;
   }
   
   .spline-description-text {
-    font-size: 0.9rem;
+    font-size: 1.05rem; /* 放大描述文字 */
     font-weight: 500;
-    max-width: 350px;
+    max-width: 55%; /* 继续缩小宽度，让文字多排更多行 */
+    text-align: left;
+    padding: 0;
   }
 }
 
 @media (max-width: 480px) {
   .spline-title-text {
-    font-size: 1.8rem;
+    font-size: 2.4rem; /* 显著放大标题 */
     font-weight: 500;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem; /* 减少底部间距 */
+    text-align: left;
+  }
+  
+  .spline-title-group .spline-title {
+    margin-bottom: -1rem; /* 小屏幕最紧凑的行距 */
   }
   
   .spline-description-text {
-    font-size: 0.8rem;
+    font-size: 1rem; /* 放大描述文字 */
     font-weight: 500;
-    max-width: 300px;
+    max-width: 60%; /* 继续缩小宽度，让文字多排更多行 */
+    text-align: left;
+    line-height: 1.4; /* 增加行高提高可读性 */
+    padding: 0;
   }
 }

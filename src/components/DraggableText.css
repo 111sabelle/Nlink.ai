@@ -42,14 +42,22 @@
 }
 
 /* 响应式设计 */
-@media (max-width: 768px) {
+@media (max-width: 968px) {
   .draggable-text {
-    height: 50px; /* 从38px增加到50px */
+    height: 35px; /* 移动端大幅缩小尺寸 */
+  }
+  
+  .draggable-text:hover {
+    transform: scale(1.02); /* 减小hover效果 */
+  }
+  
+  .draggable-text.dragging {
+    transform: scale(1.05) rotate(1deg); /* 减小拖动效果 */
   }
 }
 
 @media (max-width: 480px) {
   .draggable-text {
-    height: 42px; /* 从32px增加到42px */
+    height: 28px; /* 小屏幕进一步缩小 */
   }
 }

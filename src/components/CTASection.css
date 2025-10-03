@@ -5,17 +5,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible; /* 确保内容可以溢出显示 */
 }
 
 .cta-container {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  overflow: visible; /* 确保内容可以溢出显示 */
 }
 
 .cta-wrapper {
   position: relative;
   width: 100%;
+  overflow: visible; /* 确保图像可以超出容器显示 */
 }
 
 .cta-content {
@@ -27,6 +30,7 @@
   max-height: 300px; /* 固定最大高度，不受图像影响 */
   position: relative; /* 为绝对定位元素做准备 */
   z-index: 0; /* 设为0，让边框（z-index: -1）在背景下方 */
+  overflow: visible; /* 确保图像可以超出内容区域显示 */
 }
 
 .cta-text-area {
@@ -64,14 +68,14 @@
   position: absolute;
   top: 65%; /* 向下移动，不再垂直居中 */
   left: 2rem; /* 左侧对齐 */
-  right: 70%; /* 进一步缩短按钮长度 */
+  right: 65%; /* 增加按钮长度 */
   transform: translateY(-50%); /* 保持变换基准 */
   background: linear-gradient(90deg, #FFDEF9 0%, #C3F4DE 100%); /* 从左至右渐变 */
   border: none;
-  border-radius: 50px; /* 拉到最圆 */
-  padding: 1rem 1rem 1rem 2.5rem; /* 右侧padding减小为圆形图标留空间 */
+  border-radius: 30px; /* 更小的圆角，让按钮显得更矮 */
+  padding: 0.6rem 0.7rem 0.6rem 1.5rem; /* 大幅减少上下padding，让按钮更矮 */
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1.3rem; /* 增大文字 */
+  font-size: 1.1rem; /* 稍微减小字体以适应更矮的按钮 */
   font-weight: 600;
   color: #000000;
   cursor: pointer;
@@ -90,18 +94,19 @@
 }
 
 .cta-button-icon {
-  width: 40px;
-  height: 40px;
+  width: 32px; /* 缩小图标以适应更矮的按钮 */
+  height: 32px;
   background: #ffffff;
   border-radius: 50%; /* 圆形 */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 1rem; /* 与文字的间距 */
+  margin-left: 0.8rem; /* 与文字的间距 */
+  flex-shrink: 0; /* 防止图标被压缩 */
 }
 
 .plus-icon {
-  font-size: 24px;
+  font-size: 20px; /* 缩小加号以适应更小的圆形 */
   font-weight: 300;
   color: #000000;
   line-height: 1;
@@ -165,96 +170,190 @@
 }
 
 @media (max-width: 968px) {
+  .cta-section {
+    padding: 8rem 1.5rem; /* 缩小padding */
+  }
+  
+  .cta-wrapper {
+    overflow: visible; /* 确保图像溢出可见 */
+  }
+  
   .cta-content {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 2rem;
-    padding: 2rem;
-    max-height: none; /* 移动端移除高度限制 */
+    min-height: 240px; /* 整体缩小高度 */
+    max-height: 240px;
+    overflow: visible; /* 确保图像溢出可见 */
   }
   
   .cta-text-area {
-    width: 100%; /* 移动端文字区域全宽 */
-    max-width: none;
-    order: 2; /* 移动端文字在下方 */
+    top: 1.5rem; /* 保持左上角定位 */
+    left: 1.5rem;
+    max-width: 280px; /* 缩小宽度 */
   }
   
-  .cta-image-area {
-    position: relative; /* 移动端回到相对定位 */
-    right: auto;
-    top: auto;
-    bottom: auto;
-    width: 100%;
-    height: 250px; /* 移动端固定高度 */
-    order: 1; /* 移动端图片在上方 */
+  .cta-title {
+    font-size: 0.95rem; /* 缩小字体 */
   }
   
-  .cta-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .cta-subtitle {
+    font-size: 1.8rem; /* 缩小字体 */
   }
   
   .cta-button {
-    position: relative; /* 移动端改回相对定位 */
-    top: auto;
-    left: auto;
-    right: auto;
-    transform: none;
-    align-self: center; /* 移动端按钮居中 */
-    width: auto; /* 移动端宽度自适应 */
+    top: 65%; /* 保持位置 */
+    left: 1.5rem;
+    right: 50%; /* 调整按钮长度 */
+    padding: 0.4rem 0.5rem 0.4rem 1rem; /* 继续减少padding */
+    font-size: 0.65rem; /* 缩小字体 */
+    border-radius: 20px; /* 更小的圆角 */
+    white-space: nowrap; /* 强制文字一行显示 */
+  }
+  
+  .cta-button-icon {
+    width: 24px; /* 缩小图标 */
+    height: 24px;
+  }
+  
+  .plus-icon {
+    font-size: 16px; /* 缩小加号 */
+  }
+  
+  .cta-image-area {
+    position: absolute; /* 确保保持绝对定位 */
+    right: -5rem; /* 增加超出距离 */
+    top: -12rem;
+    bottom: -8rem;
+    width: 85%; /* 大幅放大图片占比 */
+    z-index: 100; /* 确保在最上层 */
+  }
+  
+  .cta-text-area {
+    position: absolute; /* 确保保持绝对定位 */
+  }
+  
+  .cta-button {
+    position: absolute; /* 确保保持绝对定位 */
   }
 }
 
 @media (max-width: 768px) {
   .cta-section {
-    padding: 8rem 1rem; /* 大幅增加顶部padding */
+    padding: 7rem 1.2rem;
   }
   
   .cta-content {
-    padding: 1.5rem;
-    min-height: auto;
-    border-width: 1.5px; /* 稍细的描边 */
+    min-height: 200px; /* 继续缩小 */
+    max-height: 200px;
   }
   
-  .cta-image-area {
-    height: 200px; /* 小屏幕调整图像高度 */
+  .cta-text-area {
+    top: 1.2rem;
+    left: 1.2rem;
+    max-width: 240px;
   }
   
   .cta-title {
-    font-size: 1.1rem; /* 第一行小字 */
-    font-weight: 300;
+    font-size: 0.85rem;
   }
   
   .cta-subtitle {
-    font-size: 1.5rem; /* 第二行减小 */
-    font-weight: 800;
+    font-size: 1.5rem;
   }
   
   .cta-button {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
+    top: 65%;
+    left: 1.2rem;
+    right: 53%; /* 调整按钮长度 */
+    padding: 0.35rem 0.45rem 0.35rem 1rem; /* 更小的padding */
+    font-size: 0.6rem; /* 缩小字体 */
+    border-radius: 18px; /* 更小的圆角 */
+    white-space: nowrap; /* 强制文字一行显示 */
+  }
+  
+  .cta-button-icon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .plus-icon {
+    font-size: 14px;
+  }
+  
+  .cta-image-area {
+    position: absolute; /* 确保保持绝对定位 */
+    right: -4rem;
+    top: -10rem;
+    bottom: -6rem;
+    width: 80%; /* 大幅放大图片 */
+    z-index: 100; /* 确保在最上层 */
+  }
+  
+  .cta-text-area {
+    position: absolute; /* 确保保持绝对定位 */
+  }
+  
+  .cta-button {
+    position: absolute; /* 确保保持绝对定位 */
   }
 }
 
 @media (max-width: 480px) {
-  .cta-image-area {
-    height: 180px; /* 最小屏幕进一步调整图像高度 */
+  .cta-section {
+    padding: 6rem 1rem;
+  }
+  
+  .cta-content {
+    min-height: 170px; /* 小屏幕最小尺寸 */
+    max-height: 170px;
+  }
+  
+  .cta-text-area {
+    top: 1rem;
+    left: 1rem;
+    max-width: 200px;
+    gap: 0.1rem;
   }
   
   .cta-title {
-    font-size: 0.9rem; /* 第一行最小字体 */
-    font-weight: 300;
+    font-size: 0.75rem;
   }
   
   .cta-subtitle {
-    font-size: 1.2rem; /* 第二行最小屏幕尺寸 */
-    font-weight: 800;
+    font-size: 1.3rem;
   }
   
   .cta-button {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
+    top: 65%;
+    left: 1rem;
+    right: 55%; /* 调整按钮长度 */
+    padding: 0.3rem 0.4rem 0.3rem 0.9rem; /* 最小的padding */
+    font-size: 0.55rem; /* 最小字体 */
+    border-radius: 16px; /* 最小圆角 */
+    white-space: nowrap; /* 强制文字一行显示 */
+  }
+  
+  .cta-button-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .plus-icon {
+    font-size: 12px;
+  }
+  
+  .cta-image-area {
+    position: absolute; /* 确保保持绝对定位 */
+    right: -3rem;
+    top: -8rem;
+    bottom: -5rem;
+    width: 75%; /* 大幅放大图片 */
+    z-index: 100; /* 确保在最上层 */
+  }
+  
+  .cta-text-area {
+    position: absolute; /* 确保保持绝对定位 */
+  }
+  
+  .cta-button {
+    position: absolute; /* 确保保持绝对定位 */
   }
 }

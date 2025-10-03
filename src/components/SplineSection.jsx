@@ -12,8 +12,8 @@ const SplineSection = () => {
   const secondTextRef = useRef(null);
   const thirdTextRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const targetProgressRef = useRef(0); 
-  const smoothProgressRef = useRef(0); 
+  const targetProgressRef = useRef(0);
+  const smoothProgressRef = useRef(0);
   const rafLoopRef = useRef(0);
   const [isPinned, setIsPinned] = useState(false);
   const [splineLoaded, setSplineLoaded] = useState(false);
@@ -112,9 +112,12 @@ const SplineSection = () => {
       const alpha = 0.12;
       const next = current + (target - current) * alpha;
       smoothProgressRef.current = next;
+      
+      // 优化：只在变化足够大时才更新state，减少不必要的重渲染
       if (Math.abs(next - scrollProgress) > 0.0008) {
         setScrollProgress(next);
       }
+      // 保持RAF循环持续运行，确保平滑动画不中断
       rafLoopRef.current = requestAnimationFrame(tick);
     };
     rafLoopRef.current = requestAnimationFrame(tick);
@@ -133,18 +136,16 @@ const SplineSection = () => {
 
   const easedProgress = easeInOutCubic(scrollProgress);
 
-  // 分段映射工具：将 t 映射到 [start,end] 段内的 0-1 进度
   const segment = (t, start, end) => {
     if (end === start) return 0;
     const x = (t - start) / (end - start);
     return Math.max(0, Math.min(1, x));
   };
 
-  // 第一屏：文本向上移动并淡出（范围更长 0.0 -> 0.7）
   const firstTextT = segment(easedProgress, 0.0, 0.7);
   const firstTextOpacity = 1 - firstTextT;
   // 加大位移幅度至约 45vh
-  const firstTextTranslateY = -45 * firstTextT; // vh
+  const firstTextTranslateY = -45 * firstTextT; 
 
   // 第一屏：模型原地淡出（0.1 -> 0.6）
   const firstModelT = segment(easedProgress, 0.1, 0.6);
@@ -162,15 +163,18 @@ const SplineSection = () => {
   const secondModelExitT = segment(easedProgress, 0.8, 0.87);
   const secondModelOpacity = Math.min(1, secondModelEnterT) * (1 - secondModelExitT);
 
-  // 第三屏：入场 -> 停留 -> 退场（给第三页更大的进度空间）
-  // 文本入场 0.87->0.95，延长入场时间，自下而上，从第二页退出后开始
-  const thirdTextEnterT = segment(easedProgress, 0.87, 0.95);
-  const thirdTextOpacity = thirdTextEnterT;
-  const thirdTextTranslateY = 35 * (1 - thirdTextEnterT); // vh
-
-  // 图像入场 0.89->0.96 原地淡入，稍晚于文本，延长入场时间
-  const thirdImageEnterT = segment(easedProgress, 0.89, 0.96);
+  // 图像入场 0.82->0.89 更早开始，更快完成，确保文字出现前图像已加载完成
+  const thirdImageEnterT = segment(easedProgress, 0.82, 0.89);
   const thirdImageOpacity = thirdImageEnterT;
+
+  // 文字透明度 0.87->0.90 快速加载到100%
+  const thirdTextOpacityT = segment(easedProgress, 0.87, 0.90);
+  const thirdTextOpacity = thirdTextOpacityT;
+  
+  // 文字位置移动 0.87->0.96 放慢移动速度，更优雅地到达最终位置
+  const thirdTextMoveT = segment(easedProgress, 0.87, 0.96);
+  // 从35vh向上移动到0vh（桌面端居中位置），移动端通过CSS的margin-bottom控制额外偏移
+  const thirdTextTranslateY = 35 * (1 - thirdTextMoveT); // vh，最终停在0vh
 
   // 层级：前半段第一屏在上，中段第二屏在上，后段第三屏在上
   const firstPageZ = easedProgress < 0.6 ? 3 : 1;
@@ -344,18 +348,32 @@ const SplineSection = () => {
             opacity: thirdTextOpacity,
             transform: `translateY(${thirdTextTranslateY}vh)`
           }}>
-            <ScrollReveal
-              baseOpacity={0.05}
-              enableBlur={true}
-              baseRotation={8}
-              blurStrength={15}
-              containerClassName="spline-title"
-              textClassName="spline-title-text"
-              rotationEnd="center center"
-              wordAnimationEnd="center center"
-            >
-              PLACE IN REALITY
-            </ScrollReveal>
+            <div className="spline-title-group">
+              <ScrollReveal
+                baseOpacity={0.05}
+                enableBlur={true}
+                baseRotation={8}
+                blurStrength={15}
+                containerClassName="spline-title"
+                textClassName="spline-title-text spline-title-text-line1"
+                rotationEnd="center center"
+                wordAnimationEnd="center center"
+              >
+                PLACE IN
+              </ScrollReveal>
+              <ScrollReveal
+                baseOpacity={0.05}
+                enableBlur={true}
+                baseRotation={8}
+                blurStrength={15}
+                containerClassName="spline-title"
+                textClassName="spline-title-text spline-title-text-line2"
+                rotationEnd="center center"
+                wordAnimationEnd="center center"
+              >
+                REALITY
+              </ScrollReveal>
+            </div>
             <ScrollReveal
               baseOpacity={0.1}
               enableBlur={true}
