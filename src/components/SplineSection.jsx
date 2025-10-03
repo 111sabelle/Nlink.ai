@@ -20,6 +20,7 @@ const SplineSection = () => {
   const [secondSplineLoaded, setSecondSplineLoaded] = useState(false);
   const [splineError, setSplineError] = useState(false);
   const animationFrameRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const existingScript = document.querySelector('script[src*="spline-viewer"]');
@@ -53,6 +54,17 @@ const SplineSection = () => {
     return () => {
       // 清理逻辑
     };
+  }, []);
+
+  // 媒体查询：检测移动端，仅用于调整第三页文字最终停留位置
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 968px)');
+    const handleChange = (e) => setIsMobile(e.matches);
+    // 初始值
+    setIsMobile(mql.matches);
+    // 监听变化
+    mql.addEventListener('change', handleChange);
+    return () => mql.removeEventListener('change', handleChange);
   }, []);
 
   const updateScrollAnimation = useCallback(() => {
@@ -173,8 +185,9 @@ const SplineSection = () => {
   
   // 文字位置移动 0.87->0.96 放慢移动速度，更优雅地到达最终位置
   const thirdTextMoveT = segment(easedProgress, 0.87, 0.96);
-  // 从35vh向上移动到0vh（桌面端居中位置），移动端通过CSS的margin-bottom控制额外偏移
-  const thirdTextTranslateY = 35 * (1 - thirdTextMoveT); // vh，最终停在0vh
+  // 从 35vh 向上移动到最终位置：桌面端 0vh；移动端更低（例如 30vh）以确保在图像下方。
+  const thirdTextFinalY = isMobile ? 30 : 0; // vh
+  const thirdTextTranslateY = thirdTextFinalY + (35 - thirdTextFinalY) * (1 - thirdTextMoveT);
 
   // 层级：前半段第一屏在上，中段第二屏在上，后段第三屏在上
   const firstPageZ = easedProgress < 0.6 ? 3 : 1;

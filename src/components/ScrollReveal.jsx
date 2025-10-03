@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -19,6 +19,16 @@ const ScrollReveal = ({
   wordAnimationEnd = 'bottom bottom'
 }) => {
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 968);
+
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 968);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const splitText = useMemo(() => {
     const text = typeof children === 'string' ? children : '';
@@ -35,6 +45,19 @@ const ScrollReveal = ({
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+
+    // 移动端直接显示，不做动画
+    if (isMobile) {
+      gsap.set(el, { rotate: 0, opacity: 1 });
+      const wordElements = el.querySelectorAll('.word');
+      gsap.set(wordElements, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: 'blur(0px)'
+      });
+      return;
+    }
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
     
@@ -109,7 +132,7 @@ const ScrollReveal = ({
     return () => {
       triggers.forEach(trigger => trigger.kill());
     };
-  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
+  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength, isMobile]);
 
   return (
     <h2 ref={containerRef} className={`scroll-reveal ${containerClassName}`}>

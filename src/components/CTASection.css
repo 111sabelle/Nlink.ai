@@ -111,11 +111,10 @@
   flex-shrink: 0; /* 防止图标被压缩 */
 }
 
-.plus-icon {
-  font-size: 20px; /* 缩小加号以适应更小的圆形 */
-  font-weight: 300;
-  color: #000000;
-  line-height: 1;
+.arrow-icon-img {
+  width: 18px; /* 箭头图片大小 */
+  height: 18px;
+  object-fit: contain;
 }
 
 
@@ -219,8 +218,9 @@
     height: 24px;
   }
   
-  .plus-icon {
-    font-size: 16px; /* 缩小加号 */
+  .arrow-icon-img {
+    width: 14px;
+    height: 14px;
   }
   
   .cta-image-area {
@@ -280,8 +280,9 @@
     height: 22px;
   }
   
-  .plus-icon {
-    font-size: 14px;
+  .arrow-icon-img {
+    width: 12px;
+    height: 12px;
   }
   
   .cta-image-area {
@@ -342,8 +343,9 @@
     height: 20px;
   }
   
-  .plus-icon {
-    font-size: 12px;
+  .arrow-icon-img {
+    width: 11px;
+    height: 11px;
   }
   
   .cta-image-area {

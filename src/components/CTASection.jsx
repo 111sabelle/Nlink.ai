@@ -5,6 +5,7 @@ import './CTASection.css';
 import BlurText from './BlurText';
 import ElectricBorder from './ElectricBorder';
 import jointheWaitingListImage from '../assets/jointhewaitinglist.png';
+import arrowIcon from '../assets/arrow.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -101,7 +102,7 @@ const CTASection = () => {
               >
                 <span className="cta-button-text">Join the waiting list</span>
                 <div className="cta-button-icon">
-                  <span className="plus-icon">+</span>
+                  <img src={arrowIcon} alt="arrow" className="arrow-icon-img" />
                 </div>
               </button>
             </div>
@@ -128,7 +129,7 @@ const CTASection = () => {
               >
                 <span className="cta-button-text">Join the waiting list</span>
                 <div className="cta-button-icon">
-                  <span className="plus-icon">+</span>
+                  <img src={arrowIcon} alt="arrow" className="arrow-icon-img" />
                 </div>
               </button>
             </div>

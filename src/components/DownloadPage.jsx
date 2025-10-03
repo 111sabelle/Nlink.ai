@@ -9,6 +9,7 @@ import logo from '../assets/nlink-logo.svg';
 import centerLogo from '../assets/logo.png';
 import logo2 from '../assets/logo2.png';
 import computerSticker from '../assets/computerstiker.png';
+import arrowIcon from '../assets/arrow.png';
 import './DownloadPage.css';
 
 const DownloadPage = () => {
@@ -466,7 +467,9 @@ const DownloadPage = () => {
               {/* Submit button */}
               <button type="submit" className="download-form-submit">
                 <span className="download-submit-text">Join the waiting list</span>
-                <span className="download-submit-arrow">↗</span>
+                <div className="download-submit-arrow">
+                  <img src={arrowIcon} alt="arrow" className="arrow-icon-img" />
+                </div>
         </button>
             </form>
           </div>

@@ -345,7 +345,7 @@
   }
   
   .spline-page-third .content-text {
-    margin-bottom: 35vh; /* 第三页文字最终位置更靠下 */
+    margin-bottom: 65vh; /* 超大幅度向下偏移，确保文字在图像下方 */
     padding-left: 0; /* 确保左侧对齐 */
   }
   
@@ -362,10 +362,11 @@
   .spline-page-third .spline-model {
     height: 45vh !important; /* 第三页图片容器高度更小 */
     margin-top: 0 !important; /* 移除顶部负margin */
-    margin-bottom: -32vh !important; /* 超大幅度向下移动 */
+    margin-bottom: -22vh !important; /* 减少图片向下延伸，为文字留出空间 */
     display: flex;
     align-items: flex-end; /* 图片贴底对齐 */
-    justify-content: center;
+    justify-content: flex-start; /* 左对齐 */
+    padding-left: 0;
   }
   
   .spline-page-third .spline-model img {
@@ -402,7 +403,7 @@
   }
   
   .spline-page-third .content-text {
-    margin-bottom: 40vh; /* 第三页文字最终位置更靠下 */
+    margin-bottom: 70vh; /* 超大幅度向下偏移，确保文字在图像下方 */
     padding-left: 0; /* 确保左侧对齐 */
   }
   
@@ -419,7 +420,7 @@
   .spline-page-third .spline-model {
     height: 42vh !important; /* 第三页图片容器高度更小 */
     margin-top: 0 !important; /* 移除顶部负margin */
-    margin-bottom: -30vh !important; /* 减少向下移动幅度，为文字腾出空间 */
+    margin-bottom: -20vh !important; /* 减少图片向下延伸，为文字留出空间 */
     display: flex;
     align-items: flex-end; /* 图片贴底对齐 */
     justify-content: flex-start; /* 改为左对齐 */

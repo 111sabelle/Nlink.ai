@@ -15,12 +15,34 @@ const BlurText = ({
 }) => {
   const containerRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 968);
 
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
+
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 968);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container || hasAnimated) return;
+    
+    // 移动端直接显示，不做动画
+    if (isMobile) {
+      const spans = container.querySelectorAll('.blur-text-span');
+      gsap.set(spans, {
+        filter: 'blur(0px)',
+        opacity: 1,
+        y: 0
+      });
+      setHasAnimated(true);
+      return;
+    }
 
     const spans = container.querySelectorAll('.blur-text-span');
     if (spans.length === 0) return;
@@ -74,7 +96,7 @@ const BlurText = ({
         scrollTrigger.kill();
       }
     };
-  }, [text, delay, animateBy, direction]); // 移除hasAnimated和onAnimationComplete
+  }, [text, delay, animateBy, direction, isMobile]); // 添加isMobile依赖
 
   return (
     <div ref={containerRef} className={`blur-text-container ${className}`}>

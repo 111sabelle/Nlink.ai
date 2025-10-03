@@ -168,6 +168,12 @@
   flex-shrink: 0;
 }
 
+.footer-cta-icon .arrow-icon-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
 /* 版权信息 */
 .footer-copyright {
   text-align: center;
@@ -304,6 +310,11 @@
     height: 28px;
   }
   
+  .footer-cta-icon .arrow-icon-img {
+    width: 16px;
+    height: 16px;
+  }
+  
   .footer-copyright {
     font-size: 0.7rem;
   }
@@ -359,6 +370,11 @@
   .footer-cta-icon {
     width: 24px;
     height: 24px;
+  }
+  
+  .footer-cta-icon .arrow-icon-img {
+    width: 14px;
+    height: 14px;
   }
   
   .footer-copyright {

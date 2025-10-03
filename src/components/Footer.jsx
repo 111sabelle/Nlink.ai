@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Footer.css';
 import logo from '../assets/logo.svg';
+import arrowIcon from '../assets/arrow.png';
 
 const Footer = () => {
   const [splineLoaded, setSplineLoaded] = useState(false);
@@ -111,9 +112,7 @@ const Footer = () => {
           <button className="footer-cta-button" onClick={handleSendMessage}>
             <span>Send a Message</span>
             <div className="footer-cta-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M7 17L17 7M17 7H7M17 7V17"/>
-              </svg>
+              <img src={arrowIcon} alt="arrow" className="arrow-icon-img" />
             </div>
           </button>
         </div>

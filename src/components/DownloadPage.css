@@ -143,7 +143,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh;
+  height: auto; /* 改为auto，不占据整个屏幕 */
   z-index: 1000;
   pointer-events: none;
 }
@@ -270,7 +270,7 @@
   margin-top: 4rem;
   margin-bottom: 4rem;
   position: relative;
-  z-index: 2;
+  z-index: 100; /* 提高z-index确保在所有内容之上 */
 }
 
 .download-form-header {
@@ -456,6 +456,13 @@
   max-width: 280px; /* 限制最大宽度 */
 }
 
+/* 移动端按钮居中 */
+@media (max-width: 968px) {
+  .download-form-submit {
+    align-self: center; /* 移动端居中 */
+  }
+}
+
 .download-form-submit:hover {
   transform: translateY(-2px);
 }
@@ -476,9 +483,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
   transition: transform 0.3s ease;
   flex-shrink: 0;
+}
+
+.download-submit-arrow .arrow-icon-img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 .download-form-submit:hover .download-submit-arrow {
@@ -531,6 +543,8 @@
     order: 1;
     margin-top: -2rem; /* 缩小顶部间距 */
     margin-bottom: -3rem; /* 缩小底部间距 */
+    pointer-events: none; /* 模型区域不阻挡点击 */
+    z-index: 1;
   }
   
   /* 横向滚动文字 */
@@ -581,7 +595,7 @@
     max-width: 500px;
     height: 95%;
     z-index: 10;
-    pointer-events: auto;
+    pointer-events: auto; /* 只有模型本身可交互 */
   }
   
   .download-mobile-spline spline-viewer {
@@ -602,6 +616,8 @@
     max-width: 550px; /* 限制最大宽度 */
     width: 100%; /* 宽度100%以便居中 */
     order: 2; /* 表单排在后面 */
+    z-index: 200; /* 确保在模型区域之上 */
+    pointer-events: auto; /* 确保表单可点击 */
   }
   
   .download-form-row {
