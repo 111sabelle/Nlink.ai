@@ -210,7 +210,8 @@ const DownloadPage = () => {
 
   return (
     <>
-      <PixelTrailOverlay />
+      {/* 只在桌面端显示PixelTrail鼠标反色交互 */}
+      {!isMobile && <PixelTrailOverlay />}
       
       {/* 成功提示弹窗 */}
       {showSuccess && (

@@ -187,7 +187,8 @@ function App() {
 
   return (
     <>
-      <PixelTrailOverlay />
+      {/* 只在桌面端显示PixelTrail鼠标反色交互 */}
+      {!isMobile && <PixelTrailOverlay />}
       
       {/* Coming Soon 提示弹窗 */}
       {comingSoonPage && (
