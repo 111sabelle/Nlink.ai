@@ -12,11 +12,22 @@ const CTASection = () => {
   const imageRef = useRef(null);
   const sectionRef = useRef(null);
   const [imageAnimated, setImageAnimated] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 968);
 
   const handleDownloadClick = () => {
     window.history.pushState({}, '', '/download');
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
+
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 968);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const image = imageRef.current;
@@ -60,14 +71,16 @@ const CTASection = () => {
     <section ref={sectionRef} className="cta-section">
       <div className="cta-container">
         <div className="cta-wrapper">
-          <ElectricBorder
-            color="#FEC9FF"
-            speed={1}
-            chaos={0.5}
-            thickness={2}
-            style={{ borderRadius: 24 }}
-          >
-            <div className="cta-content">
+          {/* 桌面端使用Electric边框，移动端使用普通紫色边框 */}
+          {!isMobile ? (
+            <ElectricBorder
+              color="#FEC9FF"
+              speed={1}
+              chaos={0.5}
+              thickness={2}
+              style={{ borderRadius: 24 }}
+            >
+              <div className="cta-content">
               {/* 左上角文字 */}
               <div className="cta-text-area">
                 <h2 className="cta-title">What will you place?</h2>
@@ -93,6 +106,33 @@ const CTASection = () => {
               </button>
             </div>
           </ElectricBorder>
+          ) : (
+            <div className="cta-content cta-content-mobile">
+              {/* 左上角文字 */}
+              <div className="cta-text-area">
+                <h2 className="cta-title">What will you place?</h2>
+                <BlurText
+                  text="Play Nlink now"
+                  delay={200}
+                  animateBy="words"
+                  direction="top"
+                  className="cta-subtitle"
+                  onAnimationComplete={() => console.log('CTA text animation completed')}
+                />
+              </div>
+              
+              {/* 垂直居中按钮 */}
+              <button 
+                className="cta-button" 
+                onClick={handleDownloadClick}
+              >
+                <span className="cta-button-text">Join the waiting list</span>
+                <div className="cta-button-icon">
+                  <span className="plus-icon">+</span>
+                </div>
+              </button>
+            </div>
+          )}
           
           {/* 右侧图像 - 移到ElectricBorder外部 */}
           <div className="cta-image-area">

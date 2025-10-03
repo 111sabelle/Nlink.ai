@@ -33,6 +33,12 @@
   overflow: visible; /* 确保图像可以超出内容区域显示 */
 }
 
+/* 移动端普通紫色边框 */
+.cta-content-mobile {
+  border: 2px solid #FEC9FF; /* 紫色线框 */
+  z-index: 1; /* 移动端不需要负z-index */
+}
+
 .cta-text-area {
   position: absolute;
   top: 2rem; /* 位于卡片左上角 */
